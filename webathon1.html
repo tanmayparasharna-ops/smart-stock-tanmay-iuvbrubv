@@ -476,6 +476,23 @@ h1 { font-size: 29px; margin: 0 0 8px; letter-spacing: -.8px; }
 
 
 
+
+/* Alerts overview graph */
+.alert-graph-panel{margin:0 0 18px;padding:18px;border:1px solid var(--border);border-radius:12px;background:#111c2e}
+.alert-graph-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.alert-graph-head h3{margin:0 0 5px;font-size:16px;color:var(--text)}
+.alert-graph-head p{margin:0;color:var(--muted);font-size:11px}
+.alert-graph-total{font-size:12px;color:var(--muted);padding:7px 10px;border:1px solid var(--border);border-radius:8px}
+.alert-graph-bars{display:grid;gap:15px}
+.alert-graph-row{display:grid;grid-template-columns:minmax(100px,150px) 1fr 28px;gap:12px;align-items:center}
+.alert-graph-label{font-size:12px;color:var(--text)}
+.alert-graph-track{height:13px;background:#202d42;border-radius:999px;overflow:hidden}
+.alert-graph-fill{height:100%;min-width:0;border-radius:999px;transition:width .3s ease}
+.alert-graph-count{text-align:right;font-size:12px;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums}
+.alert-graph-legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;color:var(--muted);font-size:10px}
+.alert-legend-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+@media(max-width:600px){.alert-graph-row{grid-template-columns:95px 1fr 22px;gap:8px}.alert-graph-panel{padding:13px}}
+
 .inventory-controls {
 
     display: flex;
@@ -525,6 +542,22 @@ input::placeholder { color: #718096; }
 
 
 .table-wrap { overflow-x: auto; }
+
+/* Inventory heatmap: subtle row tint communicates urgency at a glance. */
+.heatmap-legend { display:flex; align-items:center; flex-wrap:wrap; gap:9px 16px; padding:12px 14px; margin:14px 0 10px; border:1px solid var(--border); border-radius:10px; background:rgba(10,18,32,.35); }
+.heatmap-title { color:var(--text); font-size:11px; font-weight:800; margin-right:4px; }
+.heatmap-key { display:inline-flex; align-items:center; gap:6px; color:var(--muted); font-size:10px; }
+.heatmap-key i { display:inline-block; width:10px; height:10px; border-radius:3px; }
+.heatmap-key.risk-critical i { background:#ef4444; }
+.heatmap-key.risk-high i { background:#f97316; }
+.heatmap-key.risk-medium i { background:#eab308; }
+.heatmap-key.risk-healthy i { background:#22c55e; }
+#inventoryBody tr.heat-critical { background:rgba(239,68,68,.13); box-shadow:inset 3px 0 #ef4444; }
+#inventoryBody tr.heat-high { background:rgba(249,115,22,.11); box-shadow:inset 3px 0 #f97316; }
+#inventoryBody tr.heat-medium { background:rgba(234,179,8,.10); box-shadow:inset 3px 0 #eab308; }
+#inventoryBody tr.heat-healthy { background:rgba(34,197,94,.055); box-shadow:inset 3px 0 #22c55e; }
+#inventoryBody tr.heat-invalid { background:rgba(168,85,247,.10); box-shadow:inset 3px 0 #a855f7; }
+#inventoryBody tr.heat-critical:hover, #inventoryBody tr.heat-high:hover, #inventoryBody tr.heat-medium:hover, #inventoryBody tr.heat-healthy:hover, #inventoryBody tr.heat-invalid:hover { filter:brightness(1.15); }
 
 
 
@@ -842,6 +875,122 @@ tbody tr:last-child td { border-bottom: 0; }
 
 }
 
+
+
+/* Blue + white glow theme */
+:root {
+  --bg: #eef6ff;
+  --panel: #ffffff;
+  --panel2: #e7f1ff;
+  --border: #c8dcf5;
+  --text: #10213d;
+  --muted: #58708f;
+  --green: #00b8d9;
+  --red: #ef476f;
+  --orange: #f97316;
+  --yellow: #d99b00;
+  --blue: #2563eb;
+}
+body {
+  background: radial-gradient(ellipse at 15% 0%, #d9efff 0%, transparent 38%),
+              radial-gradient(ellipse at 90% 15%, #e5e4ff 0%, transparent 32%), var(--bg);
+  color: var(--text);
+}
+.sidebar {
+  background: linear-gradient(180deg, #e2f0ff 0%, #f8fbff 100%);
+  border-right-color: #c5dcf7;
+  box-shadow: 5px 0 24px rgba(37,99,235,.08);
+}
+.brand-icon {
+  background: linear-gradient(135deg, #2563eb, #22d3ee);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(34,211,238,.42);
+}
+.brand h2 span { color: #087fd1; text-shadow: 0 0 14px rgba(34,211,238,.32); }
+.nav-link { color: #45617f; }
+.nav-link:hover { background: #dcecff; color: #1558c0; }
+.nav-link.active, .nav-link[aria-current="page"] {
+  background: linear-gradient(100deg, #d7eaff, #e8faff);
+  color: #0759bd;
+  box-shadow: inset 3px 0 #22b8f0, 0 0 18px rgba(37,99,235,.10);
+}
+.panel, .card, .stat-card, .inventory-panel, .alert-card, .suggestion-card,
+.modal-content, .alert-graph-panel, .heatmap-legend {
+  background: rgba(255,255,255,.94) !important;
+  border-color: #c8dcf5 !important;
+  box-shadow: 0 8px 28px rgba(37,99,235,.075);
+}
+input, select, textarea {
+  background: #f7fbff !important;
+  color: #10213d !important;
+  border-color: #c5d9f2 !important;
+}
+input::placeholder, textarea::placeholder { color: #7890ad !important; }
+button, .primary-btn {
+  transition: box-shadow .2s ease, transform .2s ease, background .2s ease;
+}
+.primary-btn, .primary-btn:hover {
+  background: linear-gradient(100deg, #2563eb, #06b6d4) !important;
+  color: #fff !important;
+  box-shadow: 0 0 18px rgba(37,99,235,.24);
+}
+.primary-btn:hover, .secondary-btn:hover, .table-action:hover {
+  box-shadow: 0 0 20px rgba(34,211,238,.28);
+  transform: translateY(-1px);
+}
+.secondary-btn, .table-action {
+  background: #eaf4ff !important;
+  color: #174a8b !important;
+  border-color: #bfd8f5 !important;
+}
+.alert-graph-panel { background: linear-gradient(135deg, #fff, #edf7ff) !important; }
+.alert-graph-track { background: #dbeafe !important; }
+#inventoryBody tr:hover, tbody tr:hover { background: #eaf5ff !important; }
+#inventoryBody tr.heat-critical { background: rgba(239,68,68,.10) !important; }
+#inventoryBody tr.heat-high { background: rgba(249,115,22,.10) !important; }
+#inventoryBody tr.heat-medium { background: rgba(234,179,8,.12) !important; }
+#inventoryBody tr.heat-healthy { background: rgba(34,197,94,.08) !important; }
+#inventoryBody tr.heat-invalid { background: rgba(168,85,247,.10) !important; }
+.badge, .status-badge { box-shadow: 0 0 12px rgba(37,99,235,.08); }
+hr, td, th { border-color: #d8e5f5 !important; }
+
+/* Readability fix: convert leftover dark cards to the blue-white theme */
+.suggestion,
+.alert,
+.alert-graph-panel,
+.empty-state {
+  background: rgba(255,255,255,.96) !important;
+  color: #10213d !important;
+  border-color: #c8dcf5 !important;
+  box-shadow: 0 8px 24px rgba(37,99,235,.07);
+}
+.suggestion h3,
+.suggestion strong,
+.alert strong,
+.alert h3,
+.alert-graph-head h3,
+.suggestion .suggestion-icon {
+  color: #10213d !important;
+}
+.suggestion p,
+.alert p,
+.alert-graph-head p,
+.alert-graph-total,
+.empty-state p {
+  color: #58708f !important;
+}
+.suggestion:hover {
+  border-color: #60a5fa !important;
+  box-shadow: 0 10px 28px rgba(37,99,235,.14), 0 0 14px rgba(34,211,238,.10);
+}
+.alert.danger { border-left: 4px solid #ef476f !important; }
+.alert.warning { border-left: 4px solid #f59e0b !important; }
+.alert.success { border-left: 4px solid #10b981 !important; }
+.alert-graph-panel { background: linear-gradient(135deg, #ffffff, #edf7ff) !important; }
+.alert-graph-track { background: #dbeafe !important; }
+.alert-graph-total { border-color: #c5d9f2 !important; }
+
+
 </style>
 
 </head>
@@ -1008,6 +1157,23 @@ tbody tr:last-child td { border-bottom: 0; }
 
             </div>
 
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px">
+                <button class="secondary-btn" type="button" id="enableNotifications">🔔 Enable browser alerts</button>
+                <span class="muted" id="notificationStatus" aria-live="polite">Get a browser notification when urgent stock issues are detected.</span>
+            </div>
+            <div class="alert-graph-panel" aria-label="Inventory alert graph">
+                <div class="alert-graph-head">
+                    <div><h3>Inventory Risk Overview</h3><p>Live count of batches that need attention, grouped by alert type.</p></div>
+                    <div class="alert-graph-total" id="alertGraphTotal">0 active alerts</div>
+                </div>
+                <div class="alert-graph-bars" id="alertGraphBars" role="img" aria-label="Bar graph showing inventory alert counts"></div>
+                <div class="alert-graph-legend">
+                    <span><i class="alert-legend-dot" style="background:#ef4444"></i>Critical</span>
+                    <span><i class="alert-legend-dot" style="background:#f97316"></i>Expiry risk</span>
+                    <span><i class="alert-legend-dot" style="background:#eab308"></i>Low stock</span>
+                    <span><i class="alert-legend-dot" style="background:#a78bfa"></i>Date issue</span>
+                </div>
+            </div>
             <div class="alert-list" id="alertList"></div>
 
         </section>
@@ -1053,6 +1219,14 @@ tbody tr:last-child td { border-bottom: 0; }
             </div>
 
 
+
+            <div class="heatmap-legend" aria-label="Inventory heatmap legend">
+                <span class="heatmap-title">Stock risk heatmap</span>
+                <span class="heatmap-key risk-critical"><i></i> Critical: expired / out of stock</span>
+                <span class="heatmap-key risk-high"><i></i> High: expires soon</span>
+                <span class="heatmap-key risk-medium"><i></i> Medium: low stock</span>
+                <span class="heatmap-key risk-healthy"><i></i> Healthy</span>
+            </div>
 
             <div class="table-wrap">
 
@@ -1493,6 +1667,32 @@ function renderStats() {
 
 
 
+function renderAlertGraph() {
+    const counts = { expired: 0, out: 0, expiring: 0, low: 0, invalid: 0 };
+    products.forEach(product => {
+        const status = getStatus(product);
+        if (Object.prototype.hasOwnProperty.call(counts, status.key)) counts[status.key]++;
+    });
+    const rows = [
+        { key: "expired", label: "Expired", count: counts.expired, color: "#ef4444" },
+        { key: "out", label: "Out of stock", count: counts.out, color: "#dc2626" },
+        { key: "expiring", label: "Expiring within 7 days", count: counts.expiring, color: "#f97316" },
+        { key: "low", label: "Low stock", count: counts.low, color: "#eab308" },
+        { key: "invalid", label: "Check expiry date", count: counts.invalid, color: "#a78bfa" }
+    ];
+    const maxCount = Math.max(1, ...rows.map(row => row.count));
+    const total = rows.reduce((sum, row) => sum + row.count, 0);
+    const totalEl = $("alertGraphTotal");
+    const barsEl = $("alertGraphBars");
+    if (totalEl) totalEl.textContent = `${total} active alert${total === 1 ? "" : "s"}`;
+    if (barsEl) barsEl.innerHTML = rows.map(row => `
+        <div class="alert-graph-row" aria-label="${row.label}: ${row.count}">
+            <span class="alert-graph-label">${row.label}</span>
+            <div class="alert-graph-track"><div class="alert-graph-fill" style="width:${row.count ? Math.max(4, row.count / maxCount * 100) : 0}%;background:${row.color}"></div></div>
+            <span class="alert-graph-count">${row.count}</span>
+        </div>`).join("");
+}
+
 function renderAlerts() {
 
     const alerts = [];
@@ -1605,17 +1805,31 @@ function renderInventory() {
 
 
 
+    const priority = p => {
+        const status = getStatus(p);
+        // Urgent batches always appear first, regardless of their position in saved data.
+        if (status.key === "expired") return 0;
+        if (p.quantity === 0) return 1;
+        if (status.days === 0) return 2;
+        if (status.key === "expiring") return 3;
+        if (status.key === "low") return 4;
+        if (status.key === "invalid") return 5;
+        return 6; // Healthy stock goes to the bottom.
+    };
+
     const filtered = products.filter(p =>
-
         (p.name.toLowerCase().includes(search) ||
-
          p.batchId.toLowerCase().includes(search) ||
-
          p.category.toLowerCase().includes(search)) &&
-
         matchesFilter(p, filter)
-
-    );
+    ).sort((a, b) => {
+        const priorityDifference = priority(a) - priority(b);
+        if (priorityDifference !== 0) return priorityDifference;
+        // Within each priority group, show the nearest expiry first.
+        const aDays = dateDifference(a.expiryDate);
+        const bDays = dateDifference(b.expiryDate);
+        return (aDays ?? Infinity) - (bDays ?? Infinity);
+    });
 
 
 
@@ -1624,10 +1838,14 @@ function renderInventory() {
         const s = getStatus(p);
 
         const quantityColor = p.quantity === 0 ? "red-text" : p.quantity <= p.minStock ? "orange-text" : "";
+        const heatClass = s.key === "expired" || s.key === "out" ? "heat-critical"
+            : s.key === "expiring" ? "heat-high"
+            : s.key === "low" ? "heat-medium"
+            : s.key === "invalid" ? "heat-invalid" : "heat-healthy";
 
         return `
 
-            <tr>
+            <tr class="${heatClass}" title="Inventory risk: ${escapeHTML(s.label)}">
 
                 <td><div class="product-name">${escapeHTML(p.name)}</div><div class="product-id">Inventory batch</div></td>
 
@@ -1761,16 +1979,55 @@ function renderSuggestions() {
 
 
 
+let notificationsEnabled = false;
+let lastUrgentSignature = "";
+
+$("enableNotifications").addEventListener("click", async () => {
+    const status = $("notificationStatus");
+    if (!("Notification" in window)) {
+        status.textContent = "This browser does not support notifications. Keep the Alerts page open to see issues.";
+        return;
+    }
+    try {
+        const permission = await Notification.requestPermission();
+        if (permission === "granted") {
+            notificationsEnabled = true;
+            status.textContent = "Browser alerts enabled. Keep SmartStock open to receive alerts.";
+            checkUrgentNotifications(true);
+        } else {
+            status.textContent = "Notifications were not allowed. Enable them in your browser site settings.";
+        }
+    } catch (error) {
+        status.textContent = "Could not enable notifications in this browser.";
+    }
+});
+
+function checkUrgentNotifications(force = false) {
+    if (!notificationsEnabled || !("Notification" in window) || Notification.permission !== "granted") return;
+    const urgent = products.filter(p => {
+        const status = getStatus(p);
+        return status.key === "expired" || p.quantity === 0 || status.key === "expiring" || status.key === "low";
+    });
+    if (!urgent.length) {
+        lastUrgentSignature = "";
+        return;
+    }
+    const signature = urgent.map(p => `${p.id}:${p.quantity}:${p.expiryDate}:${getStatus(p).key}`).sort().join("|");
+    if (!force && signature === lastUrgentSignature) return;
+    lastUrgentSignature = signature;
+    const criticalCount = urgent.filter(p => getStatus(p).key === "expired" || p.quantity === 0).length;
+    new Notification("SmartStock: Inventory needs attention", {
+        body: `${urgent.length} batch(es) need review${criticalCount ? `, including ${criticalCount} critical issue(s)` : ""}. Open SmartStock → Alerts.`
+    });
+}
+
 function renderAll() {
-
     renderStats();
-
+    renderAlertGraph(); // Keep the Alerts tab graph in sync with the same inventory data.
     renderAlerts();
-
     renderInventory();
-
     renderSuggestions();
-
+    checkUrgentNotifications();
 }
 
 
