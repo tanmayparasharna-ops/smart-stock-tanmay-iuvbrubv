@@ -991,6 +991,57 @@ hr, td, th { border-color: #d8e5f5 !important; }
 .alert-graph-total { border-color: #c5d9f2 !important; }
 
 
+
+/* Enhanced Suggestions Action Center — matches the existing blue/white theme */
+.suggestion-intro { margin: 18px 0 20px; }
+.suggestion-score-card { display:grid; grid-template-columns:auto minmax(0,1fr) minmax(150px,190px); align-items:center; gap:18px; padding:22px; border:1px solid #bcd8ff; border-radius:18px; background:linear-gradient(115deg,#fff 0%,#eff7ff 58%,#e6faff 100%); box-shadow:0 10px 30px rgba(37,99,235,.10); }
+.suggestion-orbit { width:58px;height:58px;display:grid;place-items:center;border-radius:18px;font-size:30px;color:#fff;background:linear-gradient(135deg,#2563eb,#06b6d4);box-shadow:0 0 24px rgba(34,211,238,.35); }
+.suggestion-score-copy .eyebrow { color:#0785b9;font-size:10px;font-weight:800;letter-spacing:1.6px; }
+.suggestion-score-copy h3 { color:#10213d;margin:7px 0;font-size:20px; }
+.suggestion-score-copy p { color:#58708f;margin:0;line-height:1.6;font-size:13px; }
+.health-meter { padding:14px;border:1px solid #c8dcf5;border-radius:14px;background:rgba(255,255,255,.8);text-align:center; }
+.health-meter strong { display:block;color:#087fd1;font-size:27px; } .health-meter span { color:#58708f;font-size:11px; }
+.health-track { height:7px;background:#dbeafe;border-radius:99px;overflow:hidden;margin-top:12px; } .health-track div { height:100%;border-radius:99px;background:linear-gradient(90deg,#2563eb,#22d3ee); }
+.suggestion-toolbar { display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:10px 0 14px;color:#58708f;font-size:12px; } .suggestion-toolbar span:first-child { color:#087fd1;font-weight:800;letter-spacing:1.2px; }
+.suggestions:has(.suggestion) { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px; }
+.suggestion { position:relative;min-width:0;overflow:hidden;background:rgba(255,255,255,.96)!important;color:#10213d!important;border:1px solid #c8dcf5!important;border-radius:16px;padding:18px;box-shadow:0 8px 24px rgba(37,99,235,.07);animation:suggestionRise .35s both;animation-delay:var(--suggestion-delay,0ms); }
+@keyframes suggestionRise { from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)} }
+.suggestion:before { content:"";position:absolute;inset:0 auto 0 0;width:4px;background:#38bdf8; }
+.suggestion-urgent:before,.suggestion-critical:before { background:#ef476f; } .suggestion-high:before,.suggestion-warning:before { background:#f97316; } .suggestion-medium:before { background:#eab308; } .suggestion-healthy:before { background:#10b981; }
+.suggestion-topline { display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px; }
+.suggestion-icon { display:grid;place-items:center;width:42px;height:42px;border-radius:13px;background:#e5f4ff;color:#10213d;font-size:21px; }
+.suggestion-priority { border-radius:99px;padding:5px 8px;background:#eaf4ff;color:#2454a6;font-size:9px;font-weight:800;letter-spacing:.5px; }
+.suggestion h3 { color:#10213d!important;font-size:15px;margin:0 0 8px; } .suggestion-tag { display:inline-block;color:#087fd1;font-size:11px;font-weight:700;margin-bottom:7px; } .suggestion p { color:#58708f!important;font-size:12px;line-height:1.6;margin:0 0 15px; }
+.suggestion-action { display:flex;align-items:center;justify-content:space-between;width:100%;border:1px solid #bfd8f5;border-radius:10px;background:#eaf4ff;color:#174a8b;padding:10px 12px;font-size:12px;font-weight:700; } .suggestion-action:hover { background:#d9efff;box-shadow:0 0 16px rgba(34,211,238,.22); }
+.suggestion-footer { display:flex;gap:12px;align-items:flex-start;margin-top:18px;padding:15px 17px;border:1px solid #c8dcf5;border-radius:13px;background:linear-gradient(100deg,#fff,#f0f8ff);color:#58708f;font-size:12px;line-height:1.6; } .suggestion-footer strong { color:#10213d; } .suggestion-footer p { margin:3px 0 0; } .footer-sparkle { color:#087fd1;font-size:23px; }
+@media(max-width:950px){.suggestion-score-card{grid-template-columns:auto minmax(0,1fr)}.health-meter{grid-column:1/-1}.suggestions:has(.suggestion){grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:650px){.suggestion-score-card{grid-template-columns:1fr}.suggestions:has(.suggestion){grid-template-columns:1fr}}
+
+
+/* Dashboard upgrade: richer, live inventory intelligence */
+.dashboard-hero{position:relative;overflow:hidden;border:1px solid #b8d9ff!important;background:linear-gradient(120deg,#ffffff 0%,#f2f9ff 58%,#e8f5ff 100%)!important;box-shadow:0 14px 36px rgba(37,99,235,.09)}
+.dashboard-hero:after{content:"";position:absolute;width:260px;height:260px;right:-90px;top:-130px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,.22),rgba(37,99,235,0) 68%);pointer-events:none}
+.dashboard-hero .section-heading{position:relative;z-index:1}
+.dashboard-intro{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin:4px 0 18px;color:#58708f;font-size:13px}
+.dashboard-intro strong{color:#10213d}
+.dashboard-insights{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(260px,.7fr);gap:16px;margin-top:16px}
+.dashboard-card{min-width:0;background:rgba(255,255,255,.94);border:1px solid #c8dcf5;border-radius:18px;padding:20px;box-shadow:0 10px 28px rgba(37,99,235,.055)}
+.dashboard-card-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:17px}
+.dashboard-card-heading h3{margin:0;color:#10213d;font-size:16px}.dashboard-card-heading p{margin:5px 0 0;color:#7186a4;font-size:12px;line-height:1.5}
+.dashboard-pill{white-space:nowrap;border-radius:99px;background:#e6f5ff;color:#087fd1;padding:6px 9px;font-size:10px;font-weight:800}
+.health-summary{display:grid;grid-template-columns:140px minmax(0,1fr);gap:22px;align-items:center}
+.health-ring{width:132px;height:132px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#10b981 var(--health,0%),#dcecff 0);position:relative;box-shadow:0 0 0 7px #f1f8ff,0 0 24px rgba(34,211,238,.13)}
+.health-ring:before{content:"";position:absolute;inset:11px;border-radius:50%;background:#fff}
+.health-ring-inner{position:relative;text-align:center}.health-ring-inner strong{display:block;color:#10213d;font-size:27px;line-height:1.1}.health-ring-inner span{font-size:10px;color:#7186a4}
+.health-legend{display:grid;gap:11px}.health-legend-row{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px;color:#58708f}.health-legend-label{display:flex;align-items:center;gap:8px}.health-dot{width:9px;height:9px;border-radius:50%;flex:none}.health-legend-row strong{color:#10213d;font-size:13px}
+.dashboard-queue{display:grid;gap:9px}.dashboard-queue-item{display:flex;align-items:center;gap:11px;padding:11px;border-radius:12px;background:#f7fbff;border:1px solid #e1edfb}.queue-mark{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;font-size:16px;flex:none}.queue-mark.critical{background:#fff0f2}.queue-mark.warning{background:#fff4e8}.queue-mark.low{background:#fff9db}.queue-copy{min-width:0;flex:1}.queue-copy strong{display:block;color:#10213d;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.queue-copy span{display:block;color:#7186a4;font-size:11px;margin-top:4px}.queue-tag{font-size:9px;font-weight:800;border-radius:99px;padding:5px 7px;background:#ffe8ec;color:#d82f52;white-space:nowrap}.queue-tag.warning{background:#fff0df;color:#b85a00}.queue-tag.low{background:#fff6c7;color:#926a00}
+.dashboard-empty{border:1px dashed #b8d9ff;border-radius:12px;padding:18px;text-align:center;color:#58708f;font-size:12px;background:#f8fcff}
+.category-bars{display:grid;gap:14px}.category-row{display:grid;grid-template-columns:100px minmax(0,1fr) 26px;align-items:center;gap:10px;font-size:11px;color:#58708f}.category-track{height:9px;border-radius:99px;background:#e7f0ff;overflow:hidden}.category-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#2563eb,#22d3ee);box-shadow:0 0 12px rgba(34,211,238,.22)}.category-count{text-align:right;color:#10213d;font-weight:800}
+.dashboard-bottom{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:16px}.dashboard-quick-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.dashboard-action{border:1px solid #c8dcf5;background:linear-gradient(135deg,#fff,#f0f8ff);border-radius:13px;padding:14px;text-align:left;cursor:pointer;color:#10213d;transition:transform .18s,box-shadow .18s}.dashboard-action:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(37,99,235,.12)}.dashboard-action span{display:block;font-size:19px;margin-bottom:8px}.dashboard-action strong{display:block;font-size:12px}.dashboard-action small{display:block;color:#7186a4;font-size:10px;line-height:1.5;margin-top:5px}
+.dashboard-note{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:13px;background:linear-gradient(110deg,#e9f8ff,#eef2ff);border:1px solid #c9ddff;color:#58708f;font-size:12px;line-height:1.6}.dashboard-note b{color:#10213d}.dashboard-note-icon{font-size:21px}
+@media(max-width:900px){.dashboard-insights,.dashboard-bottom{grid-template-columns:1fr}.health-summary{grid-template-columns:120px minmax(0,1fr)}.health-ring{width:112px;height:112px}}
+@media(max-width:560px){.health-summary{grid-template-columns:1fr;justify-items:center}.health-legend{width:100%}.dashboard-quick-actions{grid-template-columns:1fr}.category-row{grid-template-columns:80px minmax(0,1fr) 22px}}
+
 </style>
 
 </head>
@@ -1111,33 +1162,33 @@ hr, td, th { border-color: #d8e5f5 !important; }
 
         </section>
 
-        <section class="panel page-view active" data-page="dashboard">
+        <section class="panel page-view active dashboard-hero" data-page="dashboard">
             <div class="section-heading">
-                <div>
-                    <h2>Welcome to SmartStock</h2>
-                    <p>Your stock, expiry dates, and reorder priorities in one place.</p>
-                </div>
-                <span class="live">● SYSTEM READY</span>
+                <div><h2>Welcome to SmartStock</h2><p>Your live command center for stock health, expiry risk, and smarter decisions.</p></div>
+                <span class="live">● LIVE INVENTORY</span>
             </div>
-            <div class="suggestions">
-                <article class="suggestion">
-                    <div class="suggestion-icon">📦</div>
-                    <h3>Manage inventory</h3>
-                    <p>Add batches, update quantities, and search products in your store.</p>
-                    <button class="secondary-btn" type="button" data-goto="inventory">Open Inventory →</button>
+            <div class="dashboard-intro"><span>Here is your store at a glance, based on the batches currently saved in this browser.</span><strong id="dashboardToday">Today's overview</strong></div>
+            <div class="dashboard-quick-actions">
+                <button class="dashboard-action" type="button" data-goto="inventory"><span>📦</span><strong>Manage inventory</strong><small>Search batches, adjust quantities, and restock</small></button>
+                <button class="dashboard-action" type="button" data-goto="alerts"><span>⚡</span><strong>Review urgent alerts</strong><small>Find expired, expiring, and low-stock items</small></button>
+                <button class="dashboard-action" type="button" data-goto="suggestions"><span>✦</span><strong>Explore smart actions</strong><small>Turn inventory signals into next steps</small></button>
+            </div>
+        </section>
+
+        <section class="page-view active" data-page="dashboard" aria-label="Dashboard insights">
+            <div class="dashboard-insights">
+                <article class="dashboard-card">
+                    <div class="dashboard-card-heading"><div><h3>Stock health</h3><p>How your inventory is distributed by current status.</p></div><span class="dashboard-pill" id="dashboardHealthLabel">Calculating</span></div>
+                    <div class="health-summary"><div class="health-ring" id="dashboardHealthRing" style="--health:0%"><div class="health-ring-inner"><strong id="dashboardHealthPercent">0%</strong><span>healthy batches</span></div></div><div class="health-legend" id="dashboardHealthLegend"></div></div>
                 </article>
-                <article class="suggestion">
-                    <div class="suggestion-icon">⚠️</div>
-                    <h3>Resolve alerts</h3>
-                    <p>Review expired, expiring-soon, low-stock, and out-of-stock batches.</p>
-                    <button class="secondary-btn" type="button" data-goto="alerts">View Alerts →</button>
+                <article class="dashboard-card">
+                    <div class="dashboard-card-heading"><div><h3>Priority queue</h3><p>Start with the issues that need attention first.</p></div><span class="dashboard-pill" id="dashboardQueueCount">0 items</span></div>
+                    <div class="dashboard-queue" id="dashboardPriorityQueue"></div>
                 </article>
-                <article class="suggestion">
-                    <div class="suggestion-icon">✦</div>
-                    <h3>Act on suggestions</h3>
-                    <p>Get practical next steps to reduce waste and avoid stockouts.</p>
-                    <button class="secondary-btn" type="button" data-goto="suggestions">See Suggestions →</button>
-                </article>
+            </div>
+            <div class="dashboard-bottom">
+                <article class="dashboard-card"><div class="dashboard-card-heading"><div><h3>Inventory by category</h3><p>Which categories make up your current stock.</p></div><span class="dashboard-pill" id="dashboardCategoryCount">0 categories</span></div><div class="category-bars" id="dashboardCategoryBars"></div></article>
+                <article class="dashboard-card"><div class="dashboard-card-heading"><div><h3>Today's focus</h3><p>A quick operational checklist generated from your stock.</p></div><span class="dashboard-pill">NEXT STEPS</span></div><div class="dashboard-note"><span class="dashboard-note-icon">💡</span><div id="dashboardFocusText"><b>Keep your inventory current.</b><br>As products change, this panel will suggest what to review.</div></div><div style="height:12px"></div><div class="dashboard-queue" id="dashboardFocusList"></div></article>
             </div>
         </section>
 
@@ -1280,7 +1331,13 @@ hr, td, th { border-color: #d8e5f5 !important; }
 
             </div>
 
+            <div class="suggestion-intro" id="suggestionIntro"></div>
+            <div class="suggestion-toolbar">
+                <span>✨ ACTION CENTER</span>
+                <span>Recommendations update with your inventory</span>
+            </div>
             <div class="suggestions" id="suggestionList"></div>
+            <div class="suggestion-footer" id="suggestionFooter"></div>
 
         </section>
 
@@ -1874,110 +1931,88 @@ function renderInventory() {
 
 
 function renderSuggestions() {
-
     const suggestions = [];
-
-
-
     const expired = products.filter(p => getStatus(p).key === "expired");
-
-    const out = products.filter(p => getStatus(p).key === "out");
-
+    const out = products.filter(p => getStatus(p).key === "out" || Number(p.quantity) <= 0);
     const low = products.filter(p => getStatus(p).key === "low");
-
     const expiring = products.filter(p => getStatus(p).key === "expiring");
+    const healthy = products.filter(p => getStatus(p).key === "healthy");
+    const invalid = products.filter(p => getStatus(p).key === "invalid");
+    const total = products.length;
+    const urgent = expired.length + out.length + invalid.length;
+    const riskCount = urgent + expiring.length + low.length;
+    const healthPct = total ? Math.round((healthy.length / total) * 100) : 0;
 
+    if (expired.length) suggestions.push({
+        icon: "⛔", title: "Remove expired batches", priority: "URGENT", tone: "critical", tag: `${expired.length} batch${expired.length===1?'':'es'} affected`,
+        detail: `${expired.slice(0,3).map(p=>p.name).join(", ")}${expired.length>3?" and more":""}: remove from sale and follow your store's safety procedure.`,
+        action: "Review inventory", goto: "inventory"
+    });
+    if (out.length) suggestions.push({
+        icon: "🚚", title: "Recover stockouts", priority: "URGENT", tone: "critical", tag: `${out.length} unavailable`,
+        detail: `${out.slice(0,3).map(p=>p.name).join(", ")}${out.length>3?" and more":""} have no units available. Check demand and supplier lead time before reordering.`,
+        action: "Open inventory", goto: "inventory"
+    });
+    if (expiring.length) suggestions.push({
+        icon: "⏳", title: "Rescue near-expiry stock", priority: "HIGH", tone: "warning", tag: `${expiring.length} batch${expiring.length===1?'':'es'} at risk`,
+        detail: `${expiring.slice(0,3).map(p=>p.name).join(", ")}${expiring.length>3?" and more":""} expire within 7 days. Review dates and move earliest-expiry stock to the front first.`,
+        action: "View at-risk stock", goto: "inventory"
+    });
+    if (low.length) suggestions.push({
+        icon: "📦", title: "Build a smart reorder list", priority: "HIGH", tone: "warning", tag: `${low.length} low-stock`,
+        detail: `${low.slice(0,3).map(p=>p.name).join(", ")}${low.length>3?" and more":""} are at or below their minimum level. Group these into one supplier check to save time.`,
+        action: "Check quantities", goto: "inventory"
+    });
+    if (invalid.length) suggestions.push({
+        icon: "🗓️", title: "Verify expiry dates", priority: "CHECK", tone: "info", tag: `${invalid.length} date issue${invalid.length===1?'':'s'}`,
+        detail: `Some batches have missing or invalid expiry dates. Correct the records so SmartStock can calculate risk reliably.`,
+        action: "Check records", goto: "inventory"
+    });
 
+    // Useful operational ideas that do not require sales data or invent demand forecasts.
+    if (expiring.length > 1 || expired.length > 1) suggestions.push({
+        icon: "🔄", title: "Use FEFO rotation", priority: "WASTE PREVENTION", tone: "creative", tag: "Reduce avoidable waste",
+        detail: "Arrange stock by earliest expiry first (FEFO), label the next batch to use, and do a quick shelf sweep at opening and closing.",
+        action: "Review expiry dates", goto: "inventory"
+    });
+    if (low.length || out.length) suggestions.push({
+        icon: "🧾", title: "Create a supplier check-in", priority: "WORKFLOW TIP", tone: "creative", tag: "Make reordering easier",
+        detail: "Use the low-stock and stockout list as a call sheet. Confirm availability, delivery time, and minimum order quantity before placing an order.",
+        action: "Review reorder items", goto: "inventory"
+    });
+    if (total > 0) suggestions.push({
+        icon: "🧹", title: "Run a 2-minute data sweep", priority: "DAILY ROUTINE", tone: "info", tag: "Keep the dashboard trustworthy",
+        detail: "Compare a few shelf quantities with the app, check batch IDs, and correct expiry dates as soon as new stock arrives.",
+        action: "Open inventory", goto: "inventory"
+    });
+    if (healthy.length && !expired.length && !out.length && !expiring.length && !low.length && !invalid.length) suggestions.unshift({
+        icon: "🌟", title: "Keep the shelves in the green", priority: "ALL CLEAR", tone: "healthy", tag: "No urgent risks detected",
+        detail: "Your recorded batches look healthy. Keep checking incoming deliveries and rotate stock by earliest expiry to maintain this status.",
+        action: "View inventory", goto: "inventory"
+    });
+    if (!total) suggestions.push({
+        icon: "🚀", title: "Start your inventory engine", priority: "GET STARTED", tone: "info", tag: "Add your first batch",
+        detail: "Add a product with its batch ID, quantity, minimum stock, and expiry date. SmartStock can then turn those details into useful recommendations.",
+        action: "Add a product", goto: "add"
+    });
 
-    if (expired.length) {
-
-        suggestions.push({
-
-            icon: "⛔", title: "Remove expired batches",
-
-            detail: `${expired.length} batch(es) have passed their expiry date. Remove them from sale and follow applicable store procedures.`
-
-        });
-
-    }
-
-
-
-    if (expiring.length) {
-
-        const names = expiring.slice(0, 3).map(p => p.name).join(", ");
-
-        suggestions.push({
-
-            icon: "⏳", title: "Prioritize near-expiry stock",
-
-            detail: `${names}${expiring.length > 3 ? " and more" : ""}: review these batches first and rotate stock using earliest-expiry-first practice.`
-
-        });
-
-    }
-
-
-
-    if (out.length) {
-
-        suggestions.push({
-
-            icon: "🚚", title: "Restock unavailable products",
-
-            detail: `${out.map(p => p.name).slice(0, 3).join(", ")}${out.length > 3 ? " and more" : ""} have zero units. Check demand and supplier availability before reordering.`
-
-        });
-
-    }
-
-
-
-    if (low.length) {
-
-        suggestions.push({
-
-            icon: "📦", title: "Reorder low-stock items",
-
-            detail: `${low.map(p => p.name).slice(0, 3).join(", ")}${low.length > 3 ? " and more" : ""} are at or below their minimum stock level.`
-
-        });
-
-    }
-
-
-
-    if (!suggestions.length) {
-
-        suggestions.push({
-
-            icon: "✅", title: "Inventory looks healthy",
-
-            detail: "No urgent issues found. Keep recording incoming stock and reviewing expiry dates regularly."
-
-        });
-
-    }
-
-
-
-    $("suggestionList").innerHTML = suggestions.map(s => `
-
-        <article class="suggestion">
-
-            <div class="suggestion-icon">${s.icon}</div>
-
-            <h3>${escapeHTML(s.title)}</h3>
-
-            <p>${escapeHTML(s.detail)}</p>
-
-        </article>
-
-    `).join("");
-
+    const intro = $("suggestionIntro");
+    if (intro) intro.innerHTML = `
+      <div class="suggestion-score-card">
+        <div class="suggestion-orbit">✦</div>
+        <div class="suggestion-score-copy"><span class="eyebrow">YOUR INVENTORY PULSE</span><h3>${riskCount ? `${riskCount} item${riskCount===1?'':'s'} need attention` : 'Looking good — keep the momentum'}</h3><p>${urgent ? `${urgent} critical record${urgent===1?'':'s'} need immediate review.` : 'No expired, unavailable, or invalid-date batches detected.'} Recommendations are based on the batches recorded in SmartStock.</p></div>
+        <div class="health-meter"><strong>${healthPct}%</strong><span>healthy batches</span><div class="health-track"><div style="width:${healthPct}%"></div></div></div>
+      </div>`;
+    $("suggestionList").innerHTML = suggestions.map((s, i) => `
+      <article class="suggestion suggestion-${s.tone}" style="--suggestion-delay:${i*55}ms">
+        <div class="suggestion-topline"><div class="suggestion-icon">${s.icon}</div><span class="suggestion-priority">${escapeHTML(s.priority)}</span></div>
+        <h3>${escapeHTML(s.title)}</h3><span class="suggestion-tag">${escapeHTML(s.tag)}</span>
+        <p>${escapeHTML(s.detail)}</p>
+        <button type="button" class="suggestion-action" data-goto="${escapeHTML(s.goto)}">${escapeHTML(s.action)} <span>↗</span></button>
+      </article>`).join("");
+    const footer = $("suggestionFooter");
+    if (footer) footer.innerHTML = `<span class="footer-sparkle">✧</span><div><strong>SmartStock tip</strong><p>These are operational prompts, not automatic purchase orders. Verify quantities, expiry dates, and supplier details before taking action.</p></div>`;
 }
-
-
 
 let notificationsEnabled = false;
 let lastUrgentSignature = "";
@@ -2021,8 +2056,63 @@ function checkUrgentNotifications(force = false) {
     });
 }
 
+function renderDashboardInsights() {
+    const total = products.length;
+    const counts = { healthy: 0, expired: 0, out: 0, expiring: 0, low: 0, invalid: 0 };
+    const categories = {};
+    products.forEach(product => {
+        const status = getStatus(product);
+        if (Object.prototype.hasOwnProperty.call(counts, status.key)) counts[status.key]++;
+        const category = String(product.category || "Uncategorized");
+        categories[category] = (categories[category] || 0) + 1;
+    });
+    const healthyPercent = total ? Math.round(counts.healthy / total * 100) : 0;
+    const ring = $("dashboardHealthRing");
+    if (ring) ring.style.setProperty("--health", `${healthyPercent}%`);
+    if ($("dashboardHealthPercent")) $("dashboardHealthPercent").textContent = `${healthyPercent}%`;
+    if ($("dashboardHealthLabel")) $("dashboardHealthLabel").textContent = total ? `${healthyPercent}% healthy` : "No data yet";
+    const legendRows = [
+        ["Healthy", counts.healthy, "#10b981"], ["Expired", counts.expired, "#ef4444"], ["Out of stock", counts.out, "#dc2626"],
+        ["Expiring within 7 days", counts.expiring, "#f97316"], ["Low stock", counts.low, "#eab308"], ["Check expiry date", counts.invalid, "#a78bfa"]
+    ];
+    if ($("dashboardHealthLegend")) $("dashboardHealthLegend").innerHTML = legendRows.map(([label,count,color]) => `<div class="health-legend-row"><span class="health-legend-label"><i class="health-dot" style="background:${color}"></i>${label}</span><strong>${count}</strong></div>`).join("");
+
+    const urgent = products.map(product => ({ product, status: getStatus(product) })).filter(({status}) => ["expired","out","expiring","low","invalid"].includes(status.key)).sort((a,b) => {
+        const rank = { expired: 0, out: 1, invalid: 2, expiring: 3, low: 4 };
+        return rank[a.status.key] - rank[b.status.key] || (a.status.days ?? 9999) - (b.status.days ?? 9999);
+    });
+    if ($("dashboardQueueCount")) $("dashboardQueueCount").textContent = `${urgent.length} item${urgent.length === 1 ? "" : "s"}`;
+    const queueEl = $("dashboardPriorityQueue");
+    if (queueEl) {
+        const icon = { expired: "⛔", out: "🚫", invalid: "🗓️", expiring: "⏳", low: "📉" };
+        const label = { expired: "EXPIRED", out: "OUT OF STOCK", invalid: "CHECK DATE", expiring: "EXPIRING SOON", low: "LOW STOCK" };
+        const tone = { expired: "critical", out: "critical", invalid: "warning", expiring: "warning", low: "low" };
+        queueEl.innerHTML = urgent.length ? urgent.slice(0,5).map(({product,status}) => `<div class="dashboard-queue-item"><div class="queue-mark ${tone[status.key]}">${icon[status.key]}</div><div class="queue-copy"><strong>${escapeHTML(product.name)}</strong><span>${status.key === "expired" ? `Expired ${Math.abs(status.days)} day(s) ago` : status.key === "out" ? `Batch ${escapeHTML(product.batchId)} needs restocking` : status.key === "invalid" ? "Expiry date needs verification" : status.key === "expiring" ? (status.days === 0 ? "Expires today" : `${status.days} day(s) left`) : `${product.quantity} units · minimum ${product.minStock}`}</span></div><span class="queue-tag ${tone[status.key]}">${label[status.key]}</span></div>`).join("") : `<div class="dashboard-empty">✨ All clear! No urgent stock issues detected.</div>`;
+    }
+
+    const categoryRows = Object.entries(categories).sort((a,b) => b[1]-a[1]);
+    if ($("dashboardCategoryCount")) $("dashboardCategoryCount").textContent = `${categoryRows.length} categor${categoryRows.length === 1 ? "y" : "ies"}`;
+    const categoryEl = $("dashboardCategoryBars");
+    if (categoryEl) {
+        const max = Math.max(1, ...categoryRows.map(([,count]) => count));
+        categoryEl.innerHTML = categoryRows.length ? categoryRows.slice(0,6).map(([name,count]) => `<div class="category-row"><span title="${escapeHTML(name)}">${escapeHTML(name.length > 15 ? name.slice(0,14)+"…" : name)}</span><div class="category-track"><div class="category-fill" style="width:${count/max*100}%"></div></div><span class="category-count">${count}</span></div>`).join("") : `<div class="dashboard-empty">Add a product to see category insights.</div>`;
+    }
+    const focus = [];
+    if (counts.expired) focus.push(["🛑", `Review ${counts.expired} expired batch${counts.expired === 1 ? "" : "es"}`, "critical"]);
+    if (counts.out) focus.push(["📦", `Restock ${counts.out} out-of-stock batch${counts.out === 1 ? "" : "es"}`, "critical"]);
+    if (counts.expiring) focus.push(["⏳", `Prioritize ${counts.expiring} batch${counts.expiring === 1 ? "" : "es"} expiring within 7 days`, "warning"]);
+    if (counts.low) focus.push(["📉", `Check reorder levels for ${counts.low} low-stock batch${counts.low === 1 ? "" : "es"}`, "low"]);
+    if (counts.invalid) focus.push(["🗓️", `Verify ${counts.invalid} expiry date${counts.invalid === 1 ? "" : "s"}`, "warning"]);
+    if (!focus.length && total) focus.push(["✅", "Inventory looks healthy — keep quantities and expiry dates up to date", "low"]);
+    if (!total) focus.push(["➕", "Add your first inventory batch to unlock live insights", "warning"]);
+    if ($("dashboardFocusText")) $("dashboardFocusText").innerHTML = total ? `<b>${healthyPercent >= 80 ? "Good stock health." : "A few things need attention."}</b><br>These next steps are calculated from the inventory saved in this browser.` : `<b>Your dashboard is ready.</b><br>Add products to populate stock health, category breakdowns, and priorities.`;
+    if ($("dashboardFocusList")) $("dashboardFocusList").innerHTML = focus.map(([emoji,text,tone]) => `<div class="dashboard-queue-item"><div class="queue-mark ${tone}">${emoji}</div><div class="queue-copy"><strong>${text}</strong><span>Suggested next step</span></div></div>`).join("");
+    if ($("dashboardToday")) $("dashboardToday").textContent = new Date().toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric",year:"numeric"});
+}
+
 function renderAll() {
     renderStats();
+    renderDashboardInsights();
     renderAlertGraph(); // Keep the Alerts tab graph in sync with the same inventory data.
     renderAlerts();
     renderInventory();
@@ -2237,6 +2327,19 @@ loadProducts();
 renderAll();
 showPage(pageInfo[window.location.hash.slice(1)] ? window.location.hash.slice(1) : "dashboard");
 
+
+
+// Suggestions action buttons navigate to the relevant workspace page.
+document.addEventListener("click", event => {
+    const button = event.target.closest("[data-goto]");
+    if (!button) return;
+    const destination = button.dataset.goto;
+    if (destination === "add") { openModal(); return; }
+    if (["dashboard", "inventory", "alerts", "suggestions"].includes(destination)) {
+        const link = document.querySelector(`.nav-link[data-page="${destination}"]`);
+        if (link) link.click();
+    }
+});
 </script>
 
 </body>
