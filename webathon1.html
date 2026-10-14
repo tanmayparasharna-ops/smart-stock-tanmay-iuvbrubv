@@ -2140,11 +2140,29 @@ function openModal(product = null) {
         $("quantity").value = "";
         $("quantity").placeholder = "e.g. 10";
         $("minStock").value = product.minStock;
-        $("expiryDate").value = product.expiryDate;
-        $("batchId").readOnly = true;
+        const existingExpiryDays = dateDifference(product.expiryDate);
+        const isExpiredBatch = existingExpiryDays !== null && existingExpiryDays < 0;
+        // Expired stock must remain its own expired batch. New stock gets a separate batch ID.
+        if (isExpiredBatch) {
+            const baseId = `${product.batchId}-NEW`;
+            let newId = baseId;
+            let suffix = 2;
+            while (products.some(p => p.batchId.toLowerCase() === newId.toLowerCase())) {
+                newId = `${baseId}-${suffix++}`;
+            }
+            $("batchId").value = newId;
+            $("batchId").readOnly = false;
+            $("expiryDate").value = "";
+            $("productForm").querySelector('label[for="batchId"]').textContent = "New Batch ID";
+            $("modalTitle").textContent = "Add New Batch (Expired Stock)";
+        } else {
+            $("expiryDate").value = product.expiryDate;
+            $("batchId").readOnly = true;
+            $("productForm").querySelector('label[for="batchId"]').textContent = "Batch ID";
+        }
+        $("expiryDate").setCustomValidity("");
         $("productName").readOnly = true;
         $("category").disabled = true;
-        // Keep expiry date editable so a batch date can be corrected during restocking.
         $("expiryDate").readOnly = false;
         $("expiryDate").disabled = false;
     } else {
@@ -2210,6 +2228,18 @@ $("productForm").addEventListener("submit", event => {
     const minStock = Number($("minStock").value);
     const expiryDate = $("expiryDate").value;
 
+    let restockingExpiredBatch = false;
+    if (editingProductId) {
+        const currentBatch = products.find(p => p.id === editingProductId);
+        const currentDays = currentBatch ? dateDifference(currentBatch.expiryDate) : null;
+        restockingExpiredBatch = !!(currentBatch && currentDays !== null && currentDays < 0);
+        if (restockingExpiredBatch && !expiryDate) {
+            showToast("Choose an expiry date for the new batch.");
+            $("expiryDate").focus();
+            return;
+        }
+    }
+
     if (!name || !category || !batchId || !expiryDate ||
         !Number.isSafeInteger(quantity) || quantity < 0 ||
         !Number.isSafeInteger(minStock) || minStock < 0 ||
@@ -2229,15 +2259,32 @@ $("productForm").addEventListener("submit", event => {
             showToast("Enter a quantity greater than 0 to restock.");
             return;
         }
-        if (existing.quantity + quantity > 1000000) {
-            showToast("That restock exceeds the quantity limit.");
-            return;
+        if (restockingExpiredBatch) {
+            // Keep the original expired batch untouched; create a separate fresh batch.
+            if (products.some(p => p.id !== existing.id && p.batchId.toLowerCase() === batchId.toLowerCase())) {
+                showToast("That new batch ID already exists. Choose a unique ID.");
+                return;
+            }
+            products.push({
+                id: (window.crypto && crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random())),
+                name: existing.name,
+                category: existing.category,
+                batchId,
+                quantity,
+                minStock,
+                expiryDate
+            });
+            showToast(`Created new batch ${batchId} with ${quantity} units. The expired batch remains separate.`);
+        } else {
+            if (existing.quantity + quantity > 1000000) {
+                showToast("That restock exceeds the quantity limit.");
+                return;
+            }
+            existing.quantity += quantity;
+            existing.minStock = minStock;
+            existing.expiryDate = expiryDate;
+            showToast(`${existing.name} restocked: +${quantity} units. New total: ${existing.quantity}.`);
         }
-
-        existing.quantity += quantity;
-        existing.minStock = minStock;
-        existing.expiryDate = expiryDate;
-        showToast(`${existing.name} restocked: +${quantity} units. New total: ${existing.quantity}.`);
     } else {
         if (products.some(p => p.batchId.toLowerCase() === batchId.toLowerCase())) {
             showToast("Batch ID already exists. Use a unique ID.");
@@ -2255,6 +2302,8 @@ $("productForm").addEventListener("submit", event => {
     renderAll();
     closeModal();
 });
+
+$("searchInput")
 
 $("searchInput").addEventListener("input", renderInventory);
 
