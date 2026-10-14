@@ -2144,7 +2144,9 @@ function openModal(product = null) {
         $("batchId").readOnly = true;
         $("productName").readOnly = true;
         $("category").disabled = true;
-        $("expiryDate").readOnly = true;
+        // Keep expiry date editable so a batch date can be corrected during restocking.
+        $("expiryDate").readOnly = false;
+        $("expiryDate").disabled = false;
     } else {
         $("batchId").readOnly = false;
         $("productName").readOnly = false;
@@ -2234,6 +2236,7 @@ $("productForm").addEventListener("submit", event => {
 
         existing.quantity += quantity;
         existing.minStock = minStock;
+        existing.expiryDate = expiryDate;
         showToast(`${existing.name} restocked: +${quantity} units. New total: ${existing.quantity}.`);
     } else {
         if (products.some(p => p.batchId.toLowerCase() === batchId.toLowerCase())) {
