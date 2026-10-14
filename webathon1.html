@@ -1042,6 +1042,12 @@ hr, td, th { border-color: #d8e5f5 !important; }
 @media(max-width:900px){.dashboard-insights,.dashboard-bottom{grid-template-columns:1fr}.health-summary{grid-template-columns:120px minmax(0,1fr)}.health-ring{width:112px;height:112px}}
 @media(max-width:560px){.health-summary{grid-template-columns:1fr;justify-items:center}.health-legend{width:100%}.dashboard-quick-actions{grid-template-columns:1fr}.category-row{grid-template-columns:80px minmax(0,1fr) 22px}}
 
+
+
+/* Inventory delete action */
+.action-cell { white-space: nowrap; }
+.delete-action { margin-left: 6px; border-color: #fecaca; color: #b91c1c; background: #fff1f2; }
+.delete-action:hover { background: #ffe4e6; border-color: #fda4af; box-shadow: 0 0 12px rgba(244, 63, 94, .18); }
 </style>
 
 </head>
@@ -1918,7 +1924,7 @@ function renderInventory() {
 
                 <td><span class="badge ${s.color}">${escapeHTML(s.label)}</span></td>
 
-                <td><button class="table-action" data-restock="${escapeHTML(p.id)}">Restock</button></td>
+                <td class="action-cell"><button class="table-action" data-restock="${escapeHTML(p.id)}">Restock</button> <button class="table-action delete-action" data-delete="${escapeHTML(p.id)}" aria-label="Delete ${escapeHTML(p.name)} batch">Delete</button></td>
 
             </tr>
 
@@ -2312,10 +2318,22 @@ $("statusFilter").addEventListener("change", renderInventory);
 
 
 $("inventoryBody").addEventListener("click", event => {
-    const button = event.target.closest("[data-restock]");
-    if (!button) return;
+    const deleteButton = event.target.closest("[data-delete]");
+    if (deleteButton) {
+        const product = products.find(p => String(p.id) === String(deleteButton.dataset.delete));
+        if (!product) return;
+        const confirmed = window.confirm(`Delete batch "${product.batchId}" for ${product.name} (${product.quantity} units)? This cannot be undone.`);
+        if (!confirmed) return;
+        products = products.filter(p => String(p.id) !== String(product.id));
+        saveProducts();
+        renderAll();
+        showToast(`Batch ${product.batchId} deleted.`);
+        return;
+    }
 
-    const product = products.find(p => p.id === button.dataset.restock);
+    const restockButton = event.target.closest("[data-restock]");
+    if (!restockButton) return;
+    const product = products.find(p => String(p.id) === String(restockButton.dataset.restock));
     if (product) openModal(product);
 });
 
