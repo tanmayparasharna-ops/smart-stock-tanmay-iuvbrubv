@@ -1,0 +1,1987 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SmartStock | Inventory Intelligence</title>
+
+
+
+<style>
+
+:root {
+
+    --bg: #0b1120;
+
+    --panel: #131c2e;
+
+    --panel2: #19253a;
+
+    --border: #29364d;
+
+    --text: #f1f5f9;
+
+    --muted: #94a3b8;
+
+    --green: #34d399;
+
+    --red: #fb7185;
+
+    --orange: #fb923c;
+
+    --yellow: #facc15;
+
+    --blue: #60a5fa;
+
+}
+
+
+
+\* { box-sizing: border-box; }
+
+
+
+body {
+
+    margin: 0;
+
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+
+    background: var(--bg);
+
+    color: var(--text);
+
+}
+
+
+
+button, input, select { font: inherit; }
+
+button { cursor: pointer; }
+
+
+
+.page-view:not(.active) { display: none !important; }
+.page-view.active { animation: pageEnter .22s ease-out; }
+@keyframes pageEnter {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.stat, .suggestion, .alert, .panel { transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease; }
+.stat:hover, .suggestion:hover { transform: translateY(-2px); border-color: #3c536f; }
+.primary-btn, .secondary-btn, .table-action, .nav-link { transition: background .18s ease, color .18s ease, transform .18s ease; }
+button:active { transform: scale(.98); }
+.toast { animation: toastEnter .2s ease-out; }
+@keyframes toastEnter {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.app {
+
+    display: grid;
+
+    grid-template-columns: 235px minmax(0, 1fr);
+
+    min-height: 100vh;
+
+}
+
+
+
+.sidebar {
+
+    background: #0e1728;
+
+    border-right: 1px solid var(--border);
+
+    padding: 26px 17px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 28px;
+
+}
+
+
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 0 8px;
+
+}
+
+
+
+.brand-icon {
+
+    background: #174d42;
+
+    color: var(--green);
+
+    padding: 10px;
+
+    border-radius: 12px;
+
+    font-size: 22px;
+
+}
+
+
+
+.brand h2 { margin: 0; font-size: 21px; letter-spacing: -.6px; }
+
+.brand h2 span { color: var(--green); }
+
+
+
+.menu-label {
+
+    color: #64748b;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+
+    padding: 0 10px;
+
+    margin: 0 0 -16px;
+
+}
+
+
+
+nav { display: grid; gap: 7px; }
+
+
+
+.nav-link {
+
+    color: var(--muted);
+
+    text-decoration: none;
+
+    padding: 13px 12px;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+
+    display: flex;
+
+    gap: 11px;
+
+    align-items: center;
+
+}
+
+
+
+.nav-link:hover, .nav-link.active {
+
+    color: var(--green);
+
+    background: #15372f;
+
+}
+
+
+
+.sidebar-footer {
+
+    margin-top: auto;
+
+    border-top: 1px solid var(--border);
+
+    padding: 20px 8px 0;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+}
+
+
+
+.sidebar-footer p { color: var(--text); margin: 0 0 6px; }
+
+
+
+.main { padding: 32px; min-width: 0; }
+
+
+
+.topbar {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin-bottom: 28px;
+
+}
+
+
+
+.eyebrow {
+
+    color: var(--green);
+
+    font-size: 10px;
+
+    letter-spacing: 1.8px;
+
+    font-weight: 800;
+
+    margin: 0 0 10px;
+
+}
+
+
+
+h1 { font-size: 29px; margin: 0 0 8px; letter-spacing: -.8px; }
+
+.subtitle { color: var(--muted); font-size: 13px; margin: 0; }
+
+
+
+.primary-btn {
+
+    border: 0;
+
+    border-radius: 10px;
+
+    background: var(--green);
+
+    color: #06281f;
+
+    padding: 12px 17px;
+
+    font-weight: 800;
+
+    font-size: 12px;
+
+    white-space: nowrap;
+
+}
+
+
+
+.primary-btn:hover { background: #6ee7b7; }
+
+
+
+.secondary-btn, .icon-btn {
+
+    border: 1px solid var(--border);
+
+    background: var(--panel2);
+
+    color: var(--text);
+
+    border-radius: 9px;
+
+    padding: 10px 13px;
+
+    font-size: 12px;
+
+}
+
+
+
+.stats {
+
+    display: grid;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 15px;
+
+    margin-bottom: 22px;
+
+}
+
+
+
+.stat {
+
+    background: var(--panel);
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    padding: 20px;
+
+    min-width: 0;
+
+}
+
+
+
+.stat-top {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 8px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+}
+
+
+
+.stat-icon { font-size: 20px; }
+
+.stat h2 { font-size: 30px; margin: 18px 0 7px; }
+
+.stat small { color: var(--muted); font-size: 11px; }
+
+
+
+.green-text { color: var(--green); }
+
+.red-text { color: var(--red); }
+
+.orange-text { color: var(--orange); }
+
+.yellow-text { color: var(--yellow); }
+
+
+
+.panel {
+
+    background: var(--panel);
+
+    border: 1px solid var(--border);
+
+    border-radius: 15px;
+
+    padding: 22px;
+
+    margin-bottom: 22px;
+
+    min-width: 0;
+
+}
+
+
+
+.section-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 19px;
+
+}
+
+
+
+.section-heading h2 { margin: 0 0 6px; font-size: 17px; }
+
+.section-heading p { margin: 0; color: var(--muted); font-size: 12px; }
+
+
+
+.live {
+
+    font-size: 10px;
+
+    color: var(--green);
+
+    background: #15372f;
+
+    border-radius: 20px;
+
+    padding: 8px 10px;
+
+    white-space: nowrap;
+
+}
+
+
+
+.alert-list { display: grid; gap: 10px; }
+
+
+
+.alert {
+
+    border: 1px solid var(--border);
+
+    border-left: 4px solid var(--orange);
+
+    background: #172235;
+
+    border-radius: 9px;
+
+    padding: 13px 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    justify-content: space-between;
+
+}
+
+
+
+.alert.danger { border-left-color: var(--red); }
+
+.alert.warning { border-left-color: var(--yellow); }
+
+.alert.success { border-left-color: var(--green); }
+
+
+
+.alert strong { display: block; font-size: 12px; margin-bottom: 5px; }
+
+.alert p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+
+
+
+.inventory-controls {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-bottom: 17px;
+
+}
+
+
+
+input, select {
+
+    width: 100%;
+
+    min-width: 0;
+
+    background: #0d1627;
+
+    border: 1px solid var(--border);
+
+    border-radius: 9px;
+
+    color: var(--text);
+
+    padding: 11px 12px;
+
+    outline: none;
+
+    font-size: 12px;
+
+}
+
+
+
+input:focus, select:focus { border-color: var(--green); }
+
+input::placeholder { color: #718096; }
+
+
+
+.inventory-controls input { flex: 1; }
+
+.inventory-controls select { width: 190px; }
+
+
+
+.table-wrap { overflow-x: auto; }
+
+
+
+table { width: 100%; border-collapse: collapse; text-align: left; white-space: nowrap; }
+
+
+
+th {
+
+    color: #8190a8;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: .7px;
+
+    padding: 13px 12px;
+
+    border-bottom: 1px solid var(--border);
+
+}
+
+
+
+td {
+
+    padding: 15px 12px;
+
+    border-bottom: 1px solid #202c40;
+
+    font-size: 12px;
+
+}
+
+
+
+tbody tr:hover { background: #172235; }
+
+tbody tr:last-child td { border-bottom: 0; }
+
+
+
+.product-name { font-weight: 700; }
+
+.product-id { color: var(--muted); font-size: 10px; margin-top: 5px; }
+
+.muted { color: var(--muted); }
+
+
+
+.badge {
+
+    display: inline-block;
+
+    border-radius: 6px;
+
+    padding: 6px 8px;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+}
+
+
+
+.badge.red { background: #48212d; color: #fda4af; }
+
+.badge.orange { background: #482b1b; color: #fdba74; }
+
+.badge.yellow { background: #423716; color: #fde047; }
+
+.badge.green { background: #153c32; color: #6ee7b7; }
+
+
+
+.table-action {
+
+    border: 1px solid var(--border);
+
+    background: #202c40;
+
+    color: var(--text);
+
+    padding: 7px 9px;
+
+    border-radius: 7px;
+
+    font-size: 10px;
+
+}
+
+
+
+.suggestions {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 13px;
+
+}
+
+
+
+.suggestion {
+
+    background: #172235;
+
+    border: 1px solid var(--border);
+
+    border-radius: 11px;
+
+    padding: 16px;
+
+}
+
+
+
+.suggestion-icon { font-size: 21px; }
+
+.suggestion h3 { font-size: 13px; margin: 12px 0 8px; }
+
+.suggestion p { font-size: 11px; color: var(--muted); line-height: 1.7; margin: 0; }
+
+
+
+.empty-state {
+
+    color: var(--muted);
+
+    text-align: center;
+
+    padding: 24px;
+
+    font-size: 12px;
+
+}
+
+
+
+.modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 10;
+
+    background: #000a;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 18px;
+
+    overflow-y: auto;
+
+}
+
+
+
+.hidden { display: none !important; }
+
+
+
+.modal-content {
+
+    background: var(--panel);
+
+    border: 1px solid var(--border);
+
+    border-radius: 16px;
+
+    padding: 24px;
+
+    width: 100%;
+
+    max-width: 520px;
+
+    margin: auto;
+
+}
+
+
+
+.modal-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+
+}
+
+
+
+.modal-header h2 { margin: 0 0 6px; font-size: 19px; }
+
+.modal-header p { margin: 0; color: var(--muted); font-size: 12px; }
+
+
+
+.close-btn {
+
+    background: transparent;
+
+    border: 0;
+
+    color: var(--muted);
+
+    font-size: 26px;
+
+}
+
+
+
+#productForm { display: grid; gap: 9px; }
+
+#productForm label { font-size: 11px; color: #cbd5e1; margin-top: 5px; }
+
+
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.form-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 14px; }
+
+
+
+.toast {
+
+    position: fixed;
+
+    bottom: 22px;
+
+    right: 22px;
+
+    background: #153c32;
+
+    border: 1px solid #26775d;
+
+    color: #a7f3d0;
+
+    border-radius: 10px;
+
+    padding: 14px 18px;
+
+    z-index: 20;
+
+    font-size: 12px;
+
+    box-shadow: 0 8px 30px #0005;
+
+}
+
+
+
+@media (max-width: 1050px) {
+
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .suggestions { grid-template-columns: 1fr; }
+
+    .main { padding: 22px; }
+
+}
+
+
+
+@media (max-width: 700px) {
+
+    .app { grid-template-columns: 1fr; }
+
+    .sidebar { padding: 15px; gap: 14px; }
+
+    .sidebar .menu-label, .sidebar-footer { display: none; }
+
+    nav { display: flex; overflow-x: auto; }
+
+    .nav-link { white-space: nowrap; padding: 10px; }
+
+    .main { padding: 17px; }
+
+    .topbar { align-items: flex-start; }
+
+    h1 { font-size: 24px; }
+
+    .subtitle { line-height: 1.5; }
+
+    .stats { gap: 9px; }
+
+    .stat { padding: 14px; }
+
+    .stat h2 { font-size: 25px; }
+
+    .panel { padding: 15px; }
+
+    .inventory-controls { flex-direction: column; }
+
+    .inventory-controls select { width: 100%; }
+
+    .live { display: none; }
+
+}
+
+</style>
+
+</head>
+
+
+
+<body>
+
+<div class="app">
+
+
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">📦</div>
+
+            <h2>Smart<span>Stock</span></h2>
+
+        </div>
+
+
+
+        <p class="menu-label">WORKSPACE</p>
+
+
+
+        <nav>
+
+            <a href="#dashboard" class="nav-link active" data-page="dashboard">▦ Dashboard</a>
+
+            <a href="#inventory" class="nav-link" data-page="inventory">▤ Inventory</a>
+
+            <a href="#alerts" class="nav-link" data-page="alerts">⚠ Alerts</a>
+
+            <a href="#suggestions" class="nav-link" data-page="suggestions">✦ Suggestions</a>
+
+        </nav>
+
+
+
+        <div class="sidebar-footer">
+
+            <p>Inventory Intelligence</p>
+
+            <small>Smarter stock. Less waste.</small>
+
+        </div>
+
+    </aside>
+
+
+
+    <main class="main">
+
+
+
+        <header class="topbar">
+
+            <div>
+
+                <p class="eyebrow">RETAIL INVENTORY INTELLIGENCE</p>
+
+                <h1 id="pageTitle">Good morning, Shopkeeper 👋</h1>
+
+                <p class="subtitle" id="pageSubtitle">Here's what's happening with your inventory today.</p>
+
+            </div>
+
+            <button class="primary-btn" id="addProductBtn">＋ Add Product</button>
+
+        </header>
+
+
+
+        <section class="stats page-view active" id="dashboard" data-page="dashboard">
+
+            <article class="stat">
+
+                <div class="stat-top"><span>Total Products</span><span class="stat-icon">📦</span></div>
+
+                <h2 id="totalProducts">0</h2>
+
+                <small>Unique inventory batches</small>
+
+            </article>
+
+            <article class="stat">
+
+                <div class="stat-top"><span>Out of Stock</span><span class="stat-icon">🚫</span></div>
+
+                <h2 class="red-text" id="outCount">0</h2>
+
+                <small>Immediate restocking needed</small>
+
+            </article>
+
+            <article class="stat">
+
+                <div class="stat-top"><span>Low Stock</span><span class="stat-icon">📉</span></div>
+
+                <h2 class="orange-text" id="lowCount">0</h2>
+
+                <small>Below minimum quantity</small>
+
+            </article>
+
+            <article class="stat">
+
+                <div class="stat-top"><span>Expiry Alerts</span><span class="stat-icon">⏳</span></div>
+
+                <h2 class="yellow-text" id="expiryCount">0</h2>
+
+                <small>Expired or expiring within 7 days</small>
+
+            </article>
+
+        </section>
+
+        <section class="panel page-view active" data-page="dashboard">
+            <div class="section-heading">
+                <div>
+                    <h2>Welcome to SmartStock</h2>
+                    <p>Your stock, expiry dates, and reorder priorities in one place.</p>
+                </div>
+                <span class="live">● SYSTEM READY</span>
+            </div>
+            <div class="suggestions">
+                <article class="suggestion">
+                    <div class="suggestion-icon">📦</div>
+                    <h3>Manage inventory</h3>
+                    <p>Add batches, update quantities, and search products in your store.</p>
+                    <button class="secondary-btn" type="button" data-goto="inventory">Open Inventory →</button>
+                </article>
+                <article class="suggestion">
+                    <div class="suggestion-icon">⚠️</div>
+                    <h3>Resolve alerts</h3>
+                    <p>Review expired, expiring-soon, low-stock, and out-of-stock batches.</p>
+                    <button class="secondary-btn" type="button" data-goto="alerts">View Alerts →</button>
+                </article>
+                <article class="suggestion">
+                    <div class="suggestion-icon">✦</div>
+                    <h3>Act on suggestions</h3>
+                    <p>Get practical next steps to reduce waste and avoid stockouts.</p>
+                    <button class="secondary-btn" type="button" data-goto="suggestions">See Suggestions →</button>
+                </article>
+            </div>
+        </section>
+
+        <section class="panel page-view" id="alerts" data-page="alerts">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>⚡ Attention Required</h2>
+
+                    <p>Automatically detected inventory issues</p>
+
+                </div>
+
+                <span class="live">● LIVE ANALYSIS</span>
+
+            </div>
+
+            <div class="alert-list" id="alertList"></div>
+
+        </section>
+
+
+
+        <section class="panel page-view" id="inventory" data-page="inventory">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>Product Inventory</h2>
+
+                    <p>Manage quantities, batches and shelf life</p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="inventory-controls">
+
+                <input type="search" id="searchInput" placeholder="⌕ Search product or batch..." aria-label="Search inventory">
+
+                <select id="statusFilter" aria-label="Filter inventory">
+
+                    <option value="all">All Products</option>
+
+                    <option value="out">Out of Stock</option>
+
+                    <option value="low">Low Stock</option>
+
+                    <option value="expired">Expired</option>
+
+                    <option value="expiring">Expiring Soon</option>
+
+                    <option value="healthy">Healthy</option>
+
+                </select>
+
+            </div>
+
+
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Product</th>
+
+                            <th>Category</th>
+
+                            <th>Batch ID</th>
+
+                            <th>Quantity</th>
+
+                            <th>Expiry Date</th>
+
+                            <th>Shelf Life</th>
+
+                            <th>Status</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="inventoryBody"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <section class="panel page-view" id="suggestions" data-page="suggestions">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>✦ Smart Suggestions</h2>
+
+                    <p>Turn inventory data into useful decisions</p>
+
+                </div>
+
+            </div>
+
+            <div class="suggestions" id="suggestionList"></div>
+
+        </section>
+
+
+
+    </main>
+
+</div>
+
+
+
+<div class="modal hidden" id="productModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2 id="modalTitle">Add Inventory Batch</h2>
+
+                <p>Enter the product and batch details below.</p>
+
+            </div>
+
+            <button class="close-btn" id="closeModalBtn" type="button" aria-label="Close">&times;</button>
+
+        </div>
+
+
+
+        <form id="productForm">
+
+            <label for="productName">Product Name</label>
+
+            <input id="productName" name="productName" required maxlength="80" placeholder="e.g. Fresh Milk">
+
+
+
+            <div class="form-row">
+
+                <div>
+
+                    <label for="category">Category</label>
+
+                    <select id="category" name="category" required>
+
+                        <option value="">Choose category</option>
+
+                        <option>Dairy</option>
+
+                        <option>Grocery</option>
+
+                        <option>Beverages</option>
+
+                        <option>Bakery</option>
+
+                        <option>Pharmacy</option>
+
+                        <option>Personal Care</option>
+
+                        <option>Other</option>
+
+                    </select>
+
+                </div>
+
+                <div>
+
+                    <label for="batchId">Batch ID</label>
+
+                    <input id="batchId" name="batchId" required maxlength="30" placeholder="e.g. MIL-101">
+
+                </div>
+
+            </div>
+
+
+
+            <div class="form-row">
+
+                <div>
+
+                    <label for="quantity">Available Quantity</label>
+
+                    <input id="quantity" name="quantity" type="number" min="0" max="1000000" step="1" required placeholder="25">
+
+                </div>
+
+                <div>
+
+                    <label for="minStock">Minimum Stock</label>
+
+                    <input id="minStock" name="minStock" type="number" min="0" max="1000000" step="1" value="5" required>
+
+                </div>
+
+            </div>
+
+
+
+            <label for="expiryDate">Expiry Date</label>
+
+            <input id="expiryDate" name="expiryDate" type="date" required>
+
+
+
+            <div class="form-actions">
+
+                <button class="secondary-btn" id="cancelBtn" type="button">Cancel</button>
+
+                <button class="primary-btn" type="submit">Save Batch</button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+
+
+
+<script>
+
+"use strict";
+
+
+
+const $ = id => document.getElementById(id);
+
+const STORAGE_KEY = "smartstock_inventory_v1";
+
+const DAY_MS = 86400000;
+
+
+
+let products = [];
+
+let toastTimer;
+let editingProductId = null;
+
+
+
+function localDateString(date = new Date()) {
+
+    const y = date.getFullYear();
+
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+
+    const d = String(date.getDate()).padStart(2, "0");
+
+    return `${y}-${m}-${d}`;
+
+}
+
+
+
+function escapeHTML(value) {
+
+    return String(value).replace(/[&<>"']/g, char => ({
+
+        "&": "&amp;",
+
+        "<": "&lt;",
+
+        ">": "&gt;",
+
+        '"': "&quot;",
+
+        "'": "&#39;"
+
+    })[char]);
+
+}
+
+
+
+function dateDifference(dateString) {
+
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(dateString)) return null;
+
+
+
+    const [y, m, d] = dateString.split("-").map(Number);
+
+    const date = new Date(y, m - 1, d);
+
+    if (date.getFullYear() !== y || date.getMonth() !== m - 1 || date.getDate() !== d) return null;
+
+
+
+    const today = localDateString().split("-").map(Number);
+
+    const todayDate = new Date(today[0], today[1] - 1, today[2]);
+
+
+
+    return Math.round((date.getTime() - todayDate.getTime()) / DAY_MS);
+
+}
+
+
+
+function getStatus(product) {
+
+    const days = dateDifference(product.expiryDate);
+
+
+
+    if (days === null) return { key: "invalid", label: "Check Date", color: "red", days };
+
+    if (days < 0) return { key: "expired", label: "Expired", color: "red", days };
+
+    if (product.quantity === 0) return { key: "out", label: "Out of Stock", color: "red", days };
+
+    if (days <= 7) return { key: "expiring", label: days === 0 ? "Expires Today" : "Expiring Soon", color: "orange", days };
+
+    if (product.quantity <= product.minStock) return { key: "low", label: "Low Stock", color: "yellow", days };
+
+
+
+    return { key: "healthy", label: "Healthy", color: "green", days };
+
+}
+
+
+
+function getShelfLife(days) {
+
+    if (days === null) return "Invalid date";
+
+    if (days < 0) return `Expired ${Math.abs(days)}d ago`;
+
+    if (days === 0) return "Expires today";
+
+    if (days === 1) return "1 day left";
+
+    return `${days} days left`;
+
+}
+
+
+
+function loadProducts() {
+
+    try {
+
+        const saved = localStorage.getItem(STORAGE_KEY);
+
+        if (saved !== null) {
+
+            const parsed = JSON.parse(saved);
+
+            if (Array.isArray(parsed)) {
+
+                products = parsed.filter(p =>
+
+                    p &&
+
+                    typeof p.id === "string" &&
+
+                    typeof p.name === "string" &&
+
+                    typeof p.category === "string" &&
+
+                    typeof p.batchId === "string" &&
+
+                    Number.isInteger(p.quantity) && p.quantity >= 0 &&
+
+                    Number.isInteger(p.minStock) && p.minStock >= 0 &&
+
+                    typeof p.expiryDate === "string"
+
+                );
+
+                return;
+
+            }
+
+        }
+
+    } catch (error) {
+
+        console.warn("Could not load saved inventory.", error);
+
+    }
+
+
+
+    products = makeDemoProducts();
+
+    saveProducts();
+
+}
+
+
+
+function makeDemoProducts() {
+
+    const today = new Date();
+
+    const offsetDate = offset => {
+
+        const date = new Date(today.getFullYear(), today.getMonth(), today.getDate() + offset);
+
+        return localDateString(date);
+
+    };
+
+
+
+    return [
+
+        { id: "demo-1", name: "Fresh Milk", category: "Dairy", batchId: "MIL-101", quantity: 0, minStock: 10, expiryDate: offsetDate(3) },
+
+        { id: "demo-2", name: "Whole Wheat Bread", category: "Bakery", batchId: "BRD-204", quantity: 4, minStock: 8, expiryDate: offsetDate(2) },
+
+        { id: "demo-3", name: "Orange Juice", category: "Beverages", batchId: "JCE-307", quantity: 12, minStock: 5, expiryDate: offsetDate(5) },
+
+        { id: "demo-4", name: "Basmati Rice", category: "Grocery", batchId: "RIC-412", quantity: 3, minStock: 10, expiryDate: offsetDate(180) },
+
+        { id: "demo-5", name: "Yogurt Cups", category: "Dairy", batchId: "YGT-519", quantity: 18, minStock: 5, expiryDate: offsetDate(-2) },
+
+        { id: "demo-6", name: "Mineral Water", category: "Beverages", batchId: "WTR-623", quantity: 40, minStock: 10, expiryDate: offsetDate(90) },
+
+        { id: "demo-7", name: "Packaged Cookies", category: "Grocery", batchId: "CKI-731", quantity: 6, minStock: 5, expiryDate: offsetDate(7) }
+
+    ];
+
+}
+
+
+
+function saveProducts() {
+
+    try {
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+
+    } catch (error) {
+
+        showToast("Could not save data in this browser.");
+
+    }
+
+}
+
+
+
+function showToast(message) {
+
+    $("toast").textContent = message;
+
+    $("toast").classList.remove("hidden");
+
+    clearTimeout(toastTimer);
+
+    toastTimer = setTimeout(() => $("toast").classList.add("hidden"), 2600);
+
+}
+
+
+
+function renderStats() {
+
+    const statuses = products.map(getStatus);
+
+
+
+    $("totalProducts").textContent = products.length;
+
+    $("outCount").textContent = statuses.filter(s => s.key === "out").length;
+
+    $("lowCount").textContent = statuses.filter(s => s.key === "low").length;
+
+    $("expiryCount").textContent = statuses.filter(s => ["expired", "expiring"].includes(s.key)).length;
+
+}
+
+
+
+function renderAlerts() {
+
+    const alerts = [];
+
+
+
+    products.forEach(p => {
+
+        const s = getStatus(p);
+
+
+
+        if (s.key === "invalid") {
+
+            alerts.push({ type: "danger", icon: "⚠️", title: `${p.name}: Invalid expiry date`, detail: "Check this batch's expiry date." });
+
+        } else if (s.key === "expired") {
+
+            alerts.push({ type: "danger", icon: "⛔", title: `${p.name} — expired`, detail: `Batch ${p.batchId}: expired ${Math.abs(s.days)} day(s) ago. Remove it from sale and follow store procedures.` });
+
+        } else if (s.key === "out") {
+
+            alerts.push({ type: "danger", icon: "🚫", title: `${p.name} — out of stock`, detail: `Batch ${p.batchId}: no units remain. Restocking is needed.` });
+
+        } else if (s.key === "expiring") {
+
+            alerts.push({ type: "warning", icon: "⏳", title: `${p.name} — ${s.days === 0 ? "expires today" : "expiring soon"}`, detail: `Batch ${p.batchId}: ${p.quantity} unit(s) remaining; ${getShelfLife(s.days)}. Prioritize review and rotation.` });
+
+        } else if (s.key === "low") {
+
+            alerts.push({ type: "warning", icon: "📉", title: `${p.name} — low stock`, detail: `Only ${p.quantity} unit(s) remain. Minimum level: ${p.minStock}. Consider reordering.` });
+
+        }
+
+    });
+
+
+
+    alerts.sort((a, b) => {
+
+        const rank = { danger: 0, warning: 1, success: 2 };
+
+        return rank[a.type] - rank[b.type];
+
+    });
+
+
+
+    const visible = alerts.slice(0, 8);
+
+
+
+    $("alertList").innerHTML = visible.length
+
+        ? visible.map(a => `
+
+            <article class="alert ${a.type}">
+
+                <span>${a.icon}</span>
+
+                <div style="flex:1">
+
+                    <strong>${escapeHTML(a.title)}</strong>
+
+                    <p>${escapeHTML(a.detail)}</p>
+
+                </div>
+
+            </article>
+
+        `).join("")
+
+        : `<div class="alert success"><span>✅</span><div><strong>All clear!</strong><p>No stock or expiry issues detected in the current inventory.</p></div></div>`;
+
+}
+
+
+
+function matchesFilter(product, filter) {
+
+    const s = getStatus(product);
+
+
+
+    if (filter === "all") return true;
+
+    if (filter === "expired") return s.key === "expired";
+
+    if (filter === "out") return s.key === "out";
+
+    if (filter === "low") return s.key === "low";
+
+    if (filter === "expiring") return s.key === "expiring";
+
+    if (filter === "healthy") return s.key === "healthy";
+
+
+
+    return true;
+
+}
+
+
+
+function renderInventory() {
+
+    const search = $("searchInput").value.trim().toLowerCase();
+
+    const filter = $("statusFilter").value;
+
+
+
+    const filtered = products.filter(p =>
+
+        (p.name.toLowerCase().includes(search) ||
+
+         p.batchId.toLowerCase().includes(search) ||
+
+         p.category.toLowerCase().includes(search)) &&
+
+        matchesFilter(p, filter)
+
+    );
+
+
+
+    $("inventoryBody").innerHTML = filtered.length ? filtered.map(p => {
+
+        const s = getStatus(p);
+
+        const quantityColor = p.quantity === 0 ? "red-text" : p.quantity <= p.minStock ? "orange-text" : "";
+
+        return `
+
+            <tr>
+
+                <td><div class="product-name">${escapeHTML(p.name)}</div><div class="product-id">Inventory batch</div></td>
+
+                <td>${escapeHTML(p.category)}</td>
+
+                <td>${escapeHTML(p.batchId)}</td>
+
+                <td class="${quantityColor}"><strong>${p.quantity}</strong> <span class="muted">units</span></td>
+
+                <td>${escapeHTML(p.expiryDate)}</td>
+
+                <td>${escapeHTML(getShelfLife(s.days))}</td>
+
+                <td><span class="badge ${s.color}">${escapeHTML(s.label)}</span></td>
+
+                <td><button class="table-action" data-restock="${escapeHTML(p.id)}">Restock</button></td>
+
+            </tr>
+
+        `;
+
+    }).join("") : `<tr><td colspan="8" class="empty-state">No matching products found.</td></tr>`;
+
+}
+
+
+
+function renderSuggestions() {
+
+    const suggestions = [];
+
+
+
+    const expired = products.filter(p => getStatus(p).key === "expired");
+
+    const out = products.filter(p => getStatus(p).key === "out");
+
+    const low = products.filter(p => getStatus(p).key === "low");
+
+    const expiring = products.filter(p => getStatus(p).key === "expiring");
+
+
+
+    if (expired.length) {
+
+        suggestions.push({
+
+            icon: "⛔", title: "Remove expired batches",
+
+            detail: `${expired.length} batch(es) have passed their expiry date. Remove them from sale and follow applicable store procedures.`
+
+        });
+
+    }
+
+
+
+    if (expiring.length) {
+
+        const names = expiring.slice(0, 3).map(p => p.name).join(", ");
+
+        suggestions.push({
+
+            icon: "⏳", title: "Prioritize near-expiry stock",
+
+            detail: `${names}${expiring.length > 3 ? " and more" : ""}: review these batches first and rotate stock using earliest-expiry-first practice.`
+
+        });
+
+    }
+
+
+
+    if (out.length) {
+
+        suggestions.push({
+
+            icon: "🚚", title: "Restock unavailable products",
+
+            detail: `${out.map(p => p.name).slice(0, 3).join(", ")}${out.length > 3 ? " and more" : ""} have zero units. Check demand and supplier availability before reordering.`
+
+        });
+
+    }
+
+
+
+    if (low.length) {
+
+        suggestions.push({
+
+            icon: "📦", title: "Reorder low-stock items",
+
+            detail: `${low.map(p => p.name).slice(0, 3).join(", ")}${low.length > 3 ? " and more" : ""} are at or below their minimum stock level.`
+
+        });
+
+    }
+
+
+
+    if (!suggestions.length) {
+
+        suggestions.push({
+
+            icon: "✅", title: "Inventory looks healthy",
+
+            detail: "No urgent issues found. Keep recording incoming stock and reviewing expiry dates regularly."
+
+        });
+
+    }
+
+
+
+    $("suggestionList").innerHTML = suggestions.map(s => `
+
+        <article class="suggestion">
+
+            <div class="suggestion-icon">${s.icon}</div>
+
+            <h3>${escapeHTML(s.title)}</h3>
+
+            <p>${escapeHTML(s.detail)}</p>
+
+        </article>
+
+    `).join("");
+
+}
+
+
+
+function renderAll() {
+
+    renderStats();
+
+    renderAlerts();
+
+    renderInventory();
+
+    renderSuggestions();
+
+}
+
+
+
+function openModal(product = null) {
+    editingProductId = product ? product.id : null;
+    $("productForm").reset();
+
+    $("minStock").value = "5";
+    $("modalTitle").textContent = product ? "Restock Inventory Batch" : "Add Inventory Batch";
+    $("productForm").querySelector('label[for="quantity"]').textContent =
+        product ? "Quantity to add" : "Available Quantity";
+    $("productForm").querySelector('[type="submit"]').textContent =
+        product ? "＋ Add Stock" : "Save Batch";
+
+    if (product) {
+        $("productName").value = product.name;
+        $("category").value = product.category;
+        $("batchId").value = product.batchId;
+        $("quantity").value = "";
+        $("quantity").placeholder = "e.g. 10";
+        $("minStock").value = product.minStock;
+        $("expiryDate").value = product.expiryDate;
+        $("batchId").readOnly = true;
+        $("productName").readOnly = true;
+        $("category").disabled = true;
+        $("expiryDate").readOnly = true;
+    } else {
+        $("batchId").readOnly = false;
+        $("productName").readOnly = false;
+        $("category").disabled = false;
+        $("expiryDate").readOnly = false;
+        $("quantity").placeholder = "25";
+        $("expiryDate").value = localDateString();
+    }
+
+    $("productModal").classList.remove("hidden");
+    $("quantity").focus();
+}
+
+
+
+function closeModal() {
+    $("productModal").classList.add("hidden");
+    editingProductId = null;
+
+    $("batchId").readOnly = false;
+    $("productName").readOnly = false;
+    $("category").disabled = false;
+    $("expiryDate").readOnly = false;
+    $("productForm").querySelector('label[for="quantity"]').textContent = "Available Quantity";
+    $("productForm").querySelector('[type="submit"]').textContent = "Save Batch";
+}
+
+
+
+$("addProductBtn").addEventListener("click", () => openModal());
+
+$("closeModalBtn").addEventListener("click", closeModal);
+
+$("cancelBtn").addEventListener("click", closeModal);
+
+
+
+$("productModal").addEventListener("click", event => {
+
+    if (event.target === $("productModal")) closeModal();
+
+});
+
+
+
+document.addEventListener("keydown", event => {
+
+    if (event.key === "Escape") closeModal();
+
+});
+
+
+
+$("productForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    const name = $("productName").value.trim();
+    const category = $("category").value;
+    const batchId = $("batchId").value.trim();
+    const quantity = Number($("quantity").value);
+    const minStock = Number($("minStock").value);
+    const expiryDate = $("expiryDate").value;
+
+    if (!name || !category || !batchId || !expiryDate ||
+        !Number.isSafeInteger(quantity) || quantity < 0 ||
+        !Number.isSafeInteger(minStock) || minStock < 0 ||
+        dateDifference(expiryDate) === null) {
+        showToast("Please enter valid product details.");
+        return;
+    }
+
+    if (editingProductId) {
+        const existing = products.find(p => p.id === editingProductId);
+        if (!existing) {
+            showToast("That inventory batch could not be found.");
+            closeModal();
+            return;
+        }
+        if (quantity <= 0) {
+            showToast("Enter a quantity greater than 0 to restock.");
+            return;
+        }
+        if (existing.quantity + quantity > 1000000) {
+            showToast("That restock exceeds the quantity limit.");
+            return;
+        }
+
+        existing.quantity += quantity;
+        existing.minStock = minStock;
+        showToast(`${existing.name} restocked: +${quantity} units. New total: ${existing.quantity}.`);
+    } else {
+        if (products.some(p => p.batchId.toLowerCase() === batchId.toLowerCase())) {
+            showToast("Batch ID already exists. Use a unique ID.");
+            return;
+        }
+
+        products.push({
+            id: (window.crypto && crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random())),
+            name, category, batchId, quantity, minStock, expiryDate
+        });
+        showToast("Product batch added successfully!");
+    }
+
+    saveProducts();
+    renderAll();
+    closeModal();
+});
+
+$("searchInput").addEventListener("input", renderInventory);
+
+$("statusFilter").addEventListener("change", renderInventory);
+
+
+
+$("inventoryBody").addEventListener("click", event => {
+    const button = event.target.closest("[data-restock]");
+    if (!button) return;
+
+    const product = products.find(p => p.id === button.dataset.restock);
+    if (product) openModal(product);
+});
+
+const pageInfo = {
+    dashboard: {
+        title: "Good morning, Shopkeeper 👋",
+        subtitle: "Here's what's happening with your inventory today."
+    },
+    inventory: {
+        title: "Product Inventory",
+        subtitle: "Manage quantities, batches, and shelf life."
+    },
+    alerts: {
+        title: "Inventory Alerts",
+        subtitle: "Find urgent stock and expiry issues before they become waste."
+    },
+    suggestions: {
+        title: "Smart Suggestions",
+        subtitle: "Turn your inventory data into practical next steps."
+    }
+};
+
+function showPage(page) {
+    if (!pageInfo[page]) return;
+
+    document.querySelectorAll(".page-view").forEach(view => {
+        view.classList.toggle("active", view.dataset.page === page);
+    });
+
+    document.querySelectorAll(".nav-link[data-page]").forEach(link => {
+        const active = link.dataset.page === page;
+        link.classList.toggle("active", active);
+        if (active) link.setAttribute("aria-current", "page");
+        else link.removeAttribute("aria-current");
+    });
+
+    $("pageTitle").textContent = pageInfo[page].title;
+    $("pageSubtitle").textContent = pageInfo[page].subtitle;
+    window.location.hash = page;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.querySelectorAll(".nav-link[data-page]").forEach(link => {
+    link.addEventListener("click", event => {
+        event.preventDefault();
+        showPage(link.dataset.page);
+    });
+});
+
+document.querySelectorAll("[data-goto]").forEach(button => {
+    button.addEventListener("click", () => showPage(button.dataset.goto));
+});
+
+window.addEventListener("hashchange", () => {
+    const page = window.location.hash.slice(1);
+    if (pageInfo[page]) showPage(page);
+});
+
+loadProducts();
+
+renderAll();
+showPage(pageInfo[window.location.hash.slice(1)] ? window.location.hash.slice(1) : "dashboard");
+
+</script>
+
+</body>
+
+</html>
