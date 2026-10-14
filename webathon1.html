@@ -1030,7 +1030,7 @@ hr, td, th { border-color: #d8e5f5 !important; }
 .dashboard-card-heading h3{margin:0;color:#10213d;font-size:16px}.dashboard-card-heading p{margin:5px 0 0;color:#7186a4;font-size:12px;line-height:1.5}
 .dashboard-pill{white-space:nowrap;border-radius:99px;background:#e6f5ff;color:#087fd1;padding:6px 9px;font-size:10px;font-weight:800}
 .health-summary{display:grid;grid-template-columns:140px minmax(0,1fr);gap:22px;align-items:center}
-.health-ring{width:132px;height:132px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#10b981 var(--health,0%),#dcecff 0);position:relative;box-shadow:0 0 0 7px #f1f8ff,0 0 24px rgba(34,211,238,.13)}
+.health-ring{width:132px;height:132px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--health-segments, #10b981 0% 100%));position:relative;box-shadow:0 0 0 7px #f1f8ff,0 0 24px rgba(34,211,238,.13)}
 .health-ring:before{content:"";position:absolute;inset:11px;border-radius:50%;background:#fff}
 .health-ring-inner{position:relative;text-align:center}.health-ring-inner strong{display:block;color:#10213d;font-size:27px;line-height:1.1}.health-ring-inner span{font-size:10px;color:#7186a4}
 .health-legend{display:grid;gap:11px}.health-legend-row{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px;color:#58708f}.health-legend-label{display:flex;align-items:center;gap:8px}.health-dot{width:9px;height:9px;border-radius:50%;flex:none}.health-legend-row strong{color:#10213d;font-size:13px}
@@ -1048,6 +1048,147 @@ hr, td, th { border-color: #d8e5f5 !important; }
 .action-cell { white-space: nowrap; }
 .delete-action { margin-left: 6px; border-color: #fecaca; color: #b91c1c; background: #fff1f2; }
 .delete-action:hover { background: #ffe4e6; border-color: #fda4af; box-shadow: 0 0 12px rgba(244, 63, 94, .18); }
+
+
+/* Visual polish pack: image showcase, layered glow, and gentle motion */
+:root { scroll-behavior: smooth; }
+body { overflow-x: hidden; }
+.app { animation: appReveal .55s cubic-bezier(.2,.75,.25,1) both; }
+@keyframes appReveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.sidebar { position: relative; overflow: hidden; }
+.sidebar:after { content:""; position:absolute; width:220px; height:220px; left:-130px; bottom:35px; border-radius:50%; background:radial-gradient(circle,rgba(34,211,238,.18),transparent 70%); pointer-events:none; }
+.brand-icon { animation: iconBob 4s ease-in-out infinite; }
+@keyframes iconBob { 0%,100% { transform:translateY(0) rotate(0); } 50% { transform:translateY(-3px) rotate(-3deg); } }
+.stat { position:relative; overflow:hidden; animation: cardFloatIn .55s both; }
+.stat:nth-child(2) { animation-delay:70ms; } .stat:nth-child(3) { animation-delay:140ms; } .stat:nth-child(4) { animation-delay:210ms; }
+.stat:after { content:""; position:absolute; width:120px; height:120px; right:-58px; top:-60px; border-radius:50%; background:radial-gradient(circle,rgba(34,211,238,.13),transparent 70%); transition:transform .35s ease; }
+.stat:hover:after { transform:scale(1.55); }
+@keyframes cardFloatIn { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+.dashboard-card, .dashboard-action, .suggestion, .alert, .panel { transition: transform .24s ease, box-shadow .24s ease, border-color .24s ease; }
+.dashboard-card:hover { transform:translateY(-3px); box-shadow:0 16px 36px rgba(37,99,235,.12); }
+.health-ring { animation:ringGlow 4s ease-in-out infinite; }
+@keyframes ringGlow { 0%,100% { filter:drop-shadow(0 0 0 rgba(34,211,238,0)); } 50% { filter:drop-shadow(0 0 9px rgba(34,211,238,.24)); } }
+.visual-showcase { display:grid; grid-template-columns:1.45fr 1fr 1fr; gap:12px; margin:18px 0 20px; }
+.visual-tile { position:relative; min-height:150px; overflow:hidden; border-radius:17px; isolation:isolate; background:#dbeafe; box-shadow:0 10px 26px rgba(37,99,235,.12); transform:translateZ(0); }
+.visual-tile-wide { min-height:190px; grid-row:span 1; }
+.visual-tile img { display:block; width:100%; height:100%; min-height:inherit; position:absolute; inset:0; object-fit:cover; transition:transform .65s cubic-bezier(.2,.7,.2,1), filter .45s ease; }
+.visual-tile:after { content:""; position:absolute; inset:0; z-index:0; background:linear-gradient(180deg,rgba(8,25,50,.02) 10%,rgba(8,25,50,.82) 100%); }
+.visual-tile:hover img { transform:scale(1.075); filter:saturate(1.12); }
+.visual-overlay { position:absolute; z-index:1; left:17px; right:15px; bottom:15px; display:grid; gap:5px; color:white; text-shadow:0 2px 12px rgba(0,0,0,.3); }
+.visual-overlay strong { font-size:15px; letter-spacing:-.2px; }
+.visual-overlay small { color:rgba(255,255,255,.86); font-size:11px; line-height:1.45; }
+.visual-kicker { color:#a5f3fc; font-size:9px; font-weight:900; letter-spacing:1.7px; }
+.visual-tile-wide .visual-overlay strong { font-size:22px; }
+.visual-floating-icon { position:absolute; z-index:1; right:17px; top:15px; width:35px; height:35px; display:grid; place-items:center; border-radius:12px; color:white; background:rgba(255,255,255,.2); border:1px solid rgba(255,255,255,.42); backdrop-filter:blur(10px); animation: sparkleFloat 3.5s ease-in-out infinite; }
+@keyframes sparkleFloat { 0%,100% { transform:translateY(0) rotate(0); } 50% { transform:translateY(-6px) rotate(8deg); } }
+.dashboard-hero { animation: heroEnter .6s .08s both; }
+@keyframes heroEnter { from { opacity:0; transform:translateY(12px) scale(.995); } to { opacity:1; transform:translateY(0) scale(1); } }
+.dashboard-action span { transition:transform .25s ease; }
+.dashboard-action:hover span { transform:translateY(-3px) scale(1.12); }
+.nav-link { position:relative; }
+.nav-link:before { content:""; position:absolute; left:0; top:25%; bottom:25%; width:3px; border-radius:99px; background:#22b8f0; transform:scaleY(0); transition:transform .2s ease; }
+.nav-link.active:before { transform:scaleY(1); }
+.alert-graph-fill { animation: barGrow .7s cubic-bezier(.2,.7,.2,1) both; transform-origin:left; }
+@keyframes barGrow { from { width:0 !important; } }
+.toast { backdrop-filter:blur(12px); }
+.primary-btn { position:relative; overflow:hidden; }
+.primary-btn:after { content:""; position:absolute; top:-40%; left:-65%; width:45%; height:180%; transform:rotate(20deg); background:rgba(255,255,255,.28); transition:left .5s ease; }
+.primary-btn:hover:after { left:130%; }
+@media (max-width:900px) { .visual-showcase { grid-template-columns:1fr 1fr; } .visual-tile-wide { grid-column:1/-1; min-height:190px; } .visual-tile:not(.visual-tile-wide) { min-height:135px; } }
+@media (max-width:560px) { .visual-showcase { grid-template-columns:1fr; } .visual-tile, .visual-tile-wide { min-height:155px; } .visual-tile-wide .visual-overlay strong { font-size:19px; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.01ms !important; } }
+
+
+/* Theme controls + richer motion layer */
+.topbar-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid #cbdcf2;background:rgba(255,255,255,.9);color:#1e3a5f;padding:11px 14px;border-radius:12px;font-weight:750;font-size:12px;box-shadow:0 5px 16px rgba(37,99,235,.07);transition:transform .25s,box-shadow .25s,background .3s,color .3s,border-color .3s}
+.theme-toggle:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(37,99,235,.16)}
+.theme-toggle-icon{display:inline-block;font-size:16px;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.theme-toggle:hover .theme-toggle-icon{transform:rotate(25deg) scale(1.15)}
+@keyframes softGlow{0%,100%{box-shadow:0 0 0 rgba(59,130,246,0)}50%{box-shadow:0 0 26px rgba(59,130,246,.15)}}
+.dashboard-card,.dashboard-action,.stat,.panel,.suggestion,.alert{animation:cardFloatIn .55s both}
+.dashboard-card:nth-child(2),.stat:nth-child(2){animation-delay:.07s}.dashboard-card:nth-child(3),.stat:nth-child(3){animation-delay:.14s}.dashboard-card:nth-child(4),.stat:nth-child(4){animation-delay:.21s}
+.primary-btn{position:relative;overflow:hidden}
+.primary-btn:after{content:"";position:absolute;top:-60%;left:-75%;width:45%;height:220%;transform:rotate(22deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.34),transparent);transition:left .65s ease;pointer-events:none}
+.primary-btn:hover:after{left:140%}
+@media(max-width:620px){.topbar-actions{width:100%;justify-content:flex-start}.topbar-actions .primary-btn,.theme-toggle{flex:1}}
+@media(prefers-reduced-motion:reduce){.theme-toggle,.theme-toggle-icon,.primary-btn:after{transition:none!important}.dashboard-card,.dashboard-action,.stat,.panel,.suggestion,.alert{animation:none!important}}
+
+body[data-theme="dark"]{background:#0b1020!important;color:#e7eefb!important;color-scheme:dark}
+body[data-theme="dark"] .app,body[data-theme="dark"] .main{background:#0b1020!important;color:#e7eefb!important}
+body[data-theme="dark"] .sidebar{background:linear-gradient(180deg,#111b31,#0c1425)!important;border-color:#25334c!important;color:#e7eefb!important}
+body[data-theme="dark"] .brand h2,body[data-theme="dark"] .topbar h1,body[data-theme="dark"] .section-heading,body[data-theme="dark"] h2,body[data-theme="dark"] h3,body[data-theme="dark"] strong,body[data-theme="dark"] label{color:#edf4ff}
+body[data-theme="dark"] .subtitle,body[data-theme="dark"] .eyebrow,body[data-theme="dark"] .menu-label,body[data-theme="dark"] small,body[data-theme="dark"] .dashboard-intro,body[data-theme="dark"] .dashboard-card-heading p{color:#9aacc8!important}
+body[data-theme="dark"] .panel,body[data-theme="dark"] .stat,body[data-theme="dark"] .dashboard-card,body[data-theme="dark"] .dashboard-action,body[data-theme="dark"] .dashboard-note,body[data-theme="dark"] .dashboard-hero{background:linear-gradient(145deg,#17233a,#111a2d)!important;border-color:#2c3d59!important;color:#dce8fb!important;box-shadow:0 12px 30px rgba(0,0,0,.18)!important}
+body[data-theme="dark"] .dashboard-hero:after{opacity:.5}
+body[data-theme="dark"] .dashboard-action:hover,body[data-theme="dark"] .dashboard-card:hover,body[data-theme="dark"] .stat:hover{box-shadow:0 16px 38px rgba(0,0,0,.32),0 0 0 1px rgba(96,165,250,.14)!important}
+body[data-theme="dark"] .dashboard-queue-item,body[data-theme="dark"] .dashboard-empty,body[data-theme="dark"] .dashboard-pill{background:#1c2b44!important;border-color:#304562!important;color:#bcd8ff!important}
+body[data-theme="dark"] .dashboard-queue-item strong,body[data-theme="dark"] .dashboard-action strong,body[data-theme="dark"] .dashboard-note b{color:#eff6ff!important}
+body[data-theme="dark"] input,body[data-theme="dark"] select,body[data-theme="dark"] textarea{background:#0c1527!important;color:#edf4ff!important;border-color:#344763!important}
+body[data-theme="dark"] input::placeholder,body[data-theme="dark"] textarea::placeholder{color:#8496b4!important}
+body[data-theme="dark"] table{color:#dce8fb!important}body[data-theme="dark"] th{background:#1a2942!important;color:#bcd4f6!important}body[data-theme="dark"] td{border-color:#293b57!important}body[data-theme="dark"] tr:hover td{background:rgba(96,165,250,.06)!important}
+body[data-theme="dark"] .secondary-btn,body[data-theme="dark"] .table-action,body[data-theme="dark"] .theme-toggle{background:#1a2942!important;color:#e5efff!important;border-color:#344967!important}
+body[data-theme="dark"] .nav-link{color:#b8c8e2!important}body[data-theme="dark"] .nav-link:hover,body[data-theme="dark"] .nav-link.active{background:linear-gradient(100deg,rgba(59,130,246,.23),rgba(34,211,238,.08))!important;color:#eff6ff!important}
+body[data-theme="dark"] .modal,body[data-theme="dark"] .modal-content,body[data-theme="dark"] .modal-card{background:#121e32!important;color:#e7eefb!important;border-color:#2d405d!important}
+body[data-theme="dark"] .toast{box-shadow:0 12px 35px rgba(0,0,0,.4)}
+
+
+/* Visual v3: category badges, language control, and lively but accessible motion */
+.language-toggle{display:inline-flex;align-items:center;gap:7px;border:1px solid #cbdcf2;background:linear-gradient(135deg,#fff,#eff6ff);color:#1e3a5f;padding:11px 14px;border-radius:12px;font-weight:800;font-size:12px;cursor:pointer;box-shadow:0 5px 16px rgba(37,99,235,.08);transition:transform .25s,box-shadow .25s}
+.language-toggle:hover{transform:translateY(-3px) rotate(-1deg);box-shadow:0 12px 24px rgba(37,99,235,.16)}
+.product-cell-visual{display:flex;align-items:center;gap:11px;min-width:160px}
+.product-logo{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border-radius:14px;font-size:22px;background:linear-gradient(145deg,#eff6ff,#dbeafe);border:1px solid #bfdbfe;box-shadow:0 5px 12px rgba(37,99,235,.10);transition:transform .28s,box-shadow .28s;animation:logoPop .5s cubic-bezier(.2,.8,.2,1) both}
+tr:hover .product-logo{transform:rotate(-7deg) scale(1.1);box-shadow:0 8px 18px rgba(37,99,235,.2)}
+@keyframes logoPop{from{opacity:0;transform:scale(.6) rotate(-15deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes shimmerSweep{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes gentleBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes pageReveal{from{opacity:0;transform:translateY(12px) scale(.99);filter:blur(2px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+.page-view.active{animation:pageReveal .38s ease-out both}
+.visual-tile img{transition:transform .8s cubic-bezier(.2,.8,.2,1),filter .6s}
+.visual-tile:hover img{transform:scale(1.075);filter:saturate(1.18)}
+.visual-tile:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 15%,rgba(255,255,255,.14) 48%,transparent 75%);background-size:220% 100%;opacity:0;transition:opacity .25s}
+.visual-tile:hover:after{opacity:1;animation:shimmerSweep 1.2s ease}
+.stat-icon{animation:gentleBob 3.6s ease-in-out infinite}
+.stat:nth-child(2) .stat-icon{animation-delay:.3s}.stat:nth-child(3) .stat-icon{animation-delay:.6s}.stat:nth-child(4) .stat-icon{animation-delay:.9s}
+body[data-theme="dark"] .language-toggle{background:#1a2942!important;color:#e5efff!important;border-color:#344967!important}
+body[data-theme="dark"] .product-logo{background:linear-gradient(145deg,#223755,#172741);border-color:#365171;box-shadow:0 5px 14px rgba(0,0,0,.22)}
+@media(max-width:620px){.language-toggle{flex:1}}
+@media(prefers-reduced-motion:reduce){.product-logo,.stat-icon,.page-view.active,.visual-tile:hover img{animation:none!important;transition:none!important}}
+
+
+/* Visual v4: extra motion polish */
+:root{--motion-ease:cubic-bezier(.2,.75,.25,1)}
+body{background-size:160% 160%;animation:ambientDrift 24s ease-in-out infinite}
+@keyframes ambientDrift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.stat,.stat-card,.dashboard-card,.panel,.visual-tile,.suggestion-card,.alert-card{transition:transform .32s var(--motion-ease),box-shadow .32s var(--motion-ease),border-color .32s ease;transform-origin:center}
+.stat:hover,.stat-card:hover,.dashboard-card:hover,.panel:hover,.suggestion-card:hover,.alert-card:hover{transform:translateY(-5px);box-shadow:0 18px 38px rgba(37,99,235,.13)}
+.primary-btn,.secondary-btn,.theme-toggle,.nav-link,.table-action,button{transition:transform .22s var(--motion-ease),box-shadow .25s ease,filter .25s ease}
+button:hover,.primary-btn:hover,.secondary-btn:hover{filter:saturate(1.12)}
+button:active,.primary-btn:active,.secondary-btn:active{transform:scale(.96)}
+.nav-link{position:relative;overflow:hidden}
+.nav-link:before{content:"";position:absolute;left:0;top:18%;bottom:18%;width:3px;border-radius:0 6px 6px 0;background:linear-gradient(#60a5fa,#22d3ee);transform:scaleY(0);transition:transform .25s ease}
+.nav-link.active:before{transform:scaleY(1)}
+tbody tr{animation:rowEnter .42s var(--motion-ease) both;transition:background .22s ease,transform .22s ease}
+tbody tr:nth-child(2){animation-delay:.025s}tbody tr:nth-child(3){animation-delay:.05s}tbody tr:nth-child(4){animation-delay:.075s}tbody tr:nth-child(5){animation-delay:.1s}
+@keyframes rowEnter{from{opacity:0;transform:translateX(-7px)}to{opacity:1;transform:translateX(0)}}
+.modal,.modal-content,.modal-card{animation:modalBounce .32s var(--motion-ease) both}
+@keyframes modalBounce{0%{opacity:0;transform:translateY(14px) scale(.97)}70%{opacity:1;transform:translateY(-2px) scale(1.005)}100%{transform:translateY(0) scale(1)}}
+.toast{animation:toastSpring .38s var(--motion-ease) both}
+@keyframes toastSpring{from{opacity:0;transform:translateY(12px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+.primary-btn{position:relative;isolation:isolate;overflow:hidden}
+.primary-btn:after{content:"";position:absolute;inset:-70% auto -70% -45%;width:30%;transform:rotate(22deg);background:rgba(255,255,255,.24);z-index:-1;transition:left .65s ease}
+.primary-btn:hover:after{left:130%}
+.theme-toggle:hover,.language-toggle:hover{animation:controlWiggle .38s ease}
+@keyframes controlWiggle{0%,100%{rotate:0deg}35%{rotate:-1.5deg}70%{rotate:1.5deg}}
+.product-logo{position:relative;overflow:hidden}
+.product-logo:after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(120deg,transparent 20%,rgba(255,255,255,.4) 50%,transparent 75%);transform:translateX(-130%);pointer-events:none}
+tr:hover .product-logo:after{animation:logoGleam .7s ease}
+@keyframes logoGleam{to{transform:translateX(130%)}}
+.visual-tile{overflow:hidden}
+.visual-tile img{will-change:transform}
+body[data-theme="dark"] .stat:hover,body[data-theme="dark"] .stat-card:hover,body[data-theme="dark"] .dashboard-card:hover,body[data-theme="dark"] .panel:hover,body[data-theme="dark"] .suggestion-card:hover,body[data-theme="dark"] .alert-card:hover{box-shadow:0 18px 38px rgba(0,0,0,.24)}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
 </style>
 
 </head>
@@ -1118,7 +1259,7 @@ hr, td, th { border-color: #d8e5f5 !important; }
 
             </div>
 
-            <button class="primary-btn" id="addProductBtn">＋ Add Product</button>
+            <div class="topbar-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode"><span class="theme-toggle-icon" id="themeToggleIcon">🌙</span><span id="themeToggleLabel">Dark mode</span></button><button class="language-toggle" id="languageToggle" type="button" aria-label="Change language">🌐 <span id="languageToggleLabel">हिन्दी</span></button><button class="primary-btn" id="addProductBtn">＋ Add Product</button></div>
 
         </header>
 
@@ -1174,6 +1315,21 @@ hr, td, th { border-color: #d8e5f5 !important; }
                 <span class="live">● LIVE INVENTORY</span>
             </div>
             <div class="dashboard-intro"><span>Here is your store at a glance, based on the batches currently saved in this browser.</span><strong id="dashboardToday">Today's overview</strong></div>
+            <div class="visual-showcase" aria-label="Inventory categories">
+                <article class="visual-tile visual-tile-wide">
+                    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=85" alt="Fresh produce arranged in a grocery store" loading="lazy">
+                    <div class="visual-overlay"><span class="visual-kicker">SMARTER INVENTORY</span><strong>Every batch. One clear view.</strong><small>Keep stock visible, organized, and ready for action.</small></div>
+                    <span class="visual-floating-icon" aria-hidden="true">✦</span>
+                </article>
+                <article class="visual-tile">
+                    <img src="https://images.unsplash.com/photo-1580913428735-bd3c269d6a82?auto=format&fit=crop&w=700&q=85" alt="Organized grocery products on shelves" loading="lazy">
+                    <div class="visual-overlay"><strong>Stay organized</strong><small>Track every batch</small></div>
+                </article>
+                <article class="visual-tile">
+                    <img src="https://images.unsplash.com/photo-1579113800032-c38bd7635818?auto=format&fit=crop&w=700&q=85" alt="Fresh groceries ready for inventory" loading="lazy">
+                    <div class="visual-overlay"><strong>Reduce waste</strong><small>Act before expiry</small></div>
+                </article>
+            </div>
             <div class="dashboard-quick-actions">
                 <button class="dashboard-action" type="button" data-goto="inventory"><span>📦</span><strong>Manage inventory</strong><small>Search batches, adjust quantities, and restock</small></button>
                 <button class="dashboard-action" type="button" data-goto="alerts"><span>⚡</span><strong>Review urgent alerts</strong><small>Find expired, expiring, and low-stock items</small></button>
@@ -1910,7 +2066,7 @@ function renderInventory() {
 
             <tr class="${heatClass}" title="Inventory risk: ${escapeHTML(s.label)}">
 
-                <td><div class="product-name">${escapeHTML(p.name)}</div><div class="product-id">Inventory batch</div></td>
+                <td><div class="product-cell-visual"><span class="product-logo" aria-hidden="true">${productLogo(p.name, p.category)}</span><div><div class="product-name">${escapeHTML(p.name)}</div><div class="product-id">Inventory batch</div></div></div></td>
 
                 <td>${escapeHTML(p.category)}</td>
 
@@ -2074,7 +2230,24 @@ function renderDashboardInsights() {
     });
     const healthyPercent = total ? Math.round(counts.healthy / total * 100) : 0;
     const ring = $("dashboardHealthRing");
-    if (ring) ring.style.setProperty("--health", `${healthyPercent}%`);
+    if (ring) {
+        ring.style.setProperty("--health", `${healthyPercent}%`);
+        const healthColors = [
+            [counts.healthy, "#10b981"], [counts.expired, "#ef4444"], [counts.out, "#dc2626"],
+            [counts.expiring, "#f97316"], [counts.low, "#eab308"], [counts.invalid, "#a78bfa"]
+        ];
+        let cumulative = 0;
+        const segments = [];
+        healthColors.forEach(([count, color]) => {
+            if (!total || count <= 0) return;
+            const start = cumulative / total * 100;
+            cumulative += count;
+            const end = cumulative / total * 100;
+            segments.push(`${color} ${start}% ${end}%`);
+        });
+        if (cumulative < total) segments.push(`#dcecff ${cumulative / total * 100}% 100%`);
+        ring.style.setProperty("--health-segments", segments.length ? segments.join(", ") : "#dcecff 0% 100%");
+    }
     if ($("dashboardHealthPercent")) $("dashboardHealthPercent").textContent = `${healthyPercent}%`;
     if ($("dashboardHealthLabel")) $("dashboardHealthLabel").textContent = total ? `${healthyPercent}% healthy` : "No data yet";
     const legendRows = [
@@ -2410,7 +2583,162 @@ document.addEventListener("click", event => {
         if (link) link.click();
     }
 });
+
+// Theme preference: persisted locally, with a one-click light/dark toggle.
+(function setupThemeToggle(){
+    const toggle = document.getElementById('themeToggle');
+    const label = document.getElementById('themeToggleLabel');
+    const icon = document.getElementById('themeToggleIcon');
+    if (!toggle || !label || !icon) return;
+    let savedTheme = 'light';
+    try { savedTheme = localStorage.getItem('smartstock_theme_v1') || 'light'; } catch (_) {}
+    function applyTheme(theme){
+        const dark = theme === 'dark';
+        document.body.dataset.theme = dark ? 'dark' : 'light';
+        label.textContent = dark ? 'White mode' : 'Dark mode';
+        icon.textContent = dark ? '☀️' : '🌙';
+        toggle.setAttribute('aria-label', dark ? 'Switch to white mode' : 'Switch to dark mode');
+        toggle.setAttribute('aria-pressed', String(dark));
+        try { localStorage.setItem('smartstock_theme_v1', dark ? 'dark' : 'light'); } catch (_) {}
+    }
+    applyTheme(savedTheme === 'dark' ? 'dark' : 'light');
+    toggle.addEventListener('click', () => {
+        const next = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+        toggle.animate?.([{transform:'scale(1)'},{transform:'scale(.94)'},{transform:'scale(1)'}],{duration:220,easing:'ease-out'});
+    });
+})();
+
+
+// Product identity badges: fast visual recognition without requiring external image downloads.
+function productLogo(name, category){
+  const value = `${name||''} ${category||''}`.toLowerCase();
+  const rules = [
+    [/cheese|dairy|milk|paneer|curd|yogurt|butter|दूध|पनीर|दही|चीज़/,'🧀'],
+    [/fruit|apple|banana|mango|orange|grape|फल|सेब|केला|आम/,'🍎'],
+    [/vegetable|veggie|potato|tomato|onion|spinach|सब्ज़ी|आलू|टमाटर|प्याज़/,'🥦'],
+    [/bread|bakery|cake|biscuit|cookie|ब्रेड|बेकरी|बिस्कुट/,'🍞'],
+    [/drink|beverage|juice|water|soda|tea|coffee|cold drink|जूस|पानी|चाय|कॉफी/,'🥤'],
+    [/rice|grain|flour|wheat|atta|दाल|चावल|आटा|अनाज/,'🌾'],
+    [/meat|chicken|fish|egg|मांस|चिकन|मछली|अंडा/,'🍗'],
+    [/clean|soap|detergent|shampoo|cleaner|साबुन|डिटर्जेंट|शैम्पू/,'🧴'],
+    [/electronic|cable|charger|battery|इलेक्ट्रॉनिक|चार्जर|बैटरी/,'🔋'],
+    [/snack|chips|chocolate|candy|namkeen|चिप्स|चॉकलेट|नमकीन/,'🍫'],
+    [/frozen|ice cream|आइसक्रीम|फ्रोजन/,'🍦'],
+    [/medicine|medical|first aid|दवा|मेडिकल/,'🩹']
+  ];
+  for(const [pattern,emoji] of rules) if(pattern.test(value)) return emoji;
+  const cat=(category||'').toLowerCase();
+  if(/food|grocery|किराना|खाद्य/.test(cat)) return '🛒';
+  if(/drink|liquid|पेय/.test(cat)) return '🥛';
+  if(/personal|care|beauty|पर्सनल/.test(cat)) return '🧴';
+  return '📦';
+}
+
+// Lightweight English/Hindi UI language switch. Inventory data entered by the user is never translated.
+(function setupLanguageToggle(){
+  const button=document.getElementById('languageToggle');
+  const label=document.getElementById('languageToggleLabel');
+  if(!button||!label) return;
+  const dictionary={
+    'WORKSPACE':'कार्यस्थल','Dashboard':'डैशबोर्ड','Inventory':'इन्वेंटरी','Alerts':'अलर्ट','Suggestions':'सुझाव',
+    'Inventory Intelligence':'इन्वेंटरी इंटेलिजेंस','Smarter stock. Less waste.':'बेहतर स्टॉक, कम बर्बादी।',
+    'RETAIL INVENTORY INTELLIGENCE':'रिटेल इन्वेंटरी इंटेलिजेंस','Good morning, Shopkeeper 👋':'सुप्रभात, दुकानदार 👋',
+    "Here's what's happening with your inventory today.":'आज आपकी इन्वेंटरी का हाल यहाँ देखें।',
+    'Dark mode':'डार्क मोड','White mode':'लाइट मोड','＋ Add Product':'＋ उत्पाद जोड़ें','Total Products':'कुल उत्पाद',
+    'Out of Stock':'स्टॉक खत्म','Low Stock':'कम स्टॉक','Expiry Alerts':'एक्सपायरी अलर्ट',
+    'Unique inventory batches':'इन्वेंटरी के अलग-अलग बैच','Immediate restocking needed':'तुरंत स्टॉक भरने की ज़रूरत',
+    'Below minimum quantity':'न्यूनतम मात्रा से कम','Expired or expiring within 7 days':'एक्सपायर हो चुका या 7 दिनों में एक्सपायर होगा',
+    'Welcome to SmartStock':'SmartStock में आपका स्वागत है','Your live command center for stock health, expiry risk, and smarter decisions.':'स्टॉक की स्थिति, एक्सपायरी जोखिम और बेहतर फैसलों के लिए आपका लाइव डैशबोर्ड।',
+    '● LIVE INVENTORY':'● लाइव इन्वेंटरी','Here is your store at a glance, based on the batches currently saved in this browser.':'इस ब्राउज़र में सेव किए गए बैचों के आधार पर आपकी दुकान की एक झलक।',
+    "Today's overview":'आज का सारांश','SMARTER INVENTORY':'स्मार्ट इन्वेंटरी','Every batch. One clear view.':'हर बैच, एक साफ़ नज़र में।',
+    'Keep stock visible, organized, and ready for action.':'स्टॉक को व्यवस्थित रखें और कार्रवाई के लिए तैयार रहें।','Stay organized':'व्यवस्थित रहें',
+    'Track every batch':'हर बैच ट्रैक करें','Reduce waste':'बर्बादी घटाएँ','Act before expiry':'एक्सपायरी से पहले कदम उठाएँ',
+    'Manage inventory':'इन्वेंटरी संभालें','Search batches, adjust quantities, and restock':'बैच खोजें, मात्रा बदलें और स्टॉक भरें',
+    'Review urgent alerts':'ज़रूरी अलर्ट देखें','Find expired, expiring, and low-stock items':'एक्सपायर, जल्द एक्सपायर और कम स्टॉक वाले आइटम देखें',
+    'Explore smart actions':'स्मार्ट सुझाव देखें','Turn inventory signals into next steps':'इन्वेंटरी के संकेतों से अगले कदम तय करें',
+    'Inventory by category':'कैटेगरी के अनुसार इन्वेंटरी','Which categories make up your current stock.':'आपके स्टॉक में कौन-सी कैटेगरी हैं।',
+    'Product Inventory':'उत्पाद इन्वेंटरी','Inventory batch':'इन्वेंटरी बैच','units':'यूनिट',
+    'Restock':'स्टॉक भरें','Delete':'हटाएँ','No matching products found.':'कोई मिलता-जुलता उत्पाद नहीं मिला।',
+    'Search products, categories, or batch IDs...':'उत्पाद, कैटेगरी या बैच ID खोजें...','All statuses':'सभी स्थितियाँ',
+    'Healthy':'ठीक','Low stock':'कम स्टॉक','Out of stock':'स्टॉक खत्म','Expiring soon':'जल्द एक्सपायर','Expired':'एक्सपायर',
+    'Add Inventory Batch':'इन्वेंटरी बैच जोड़ें','Restock Inventory Batch':'इन्वेंटरी बैच में स्टॉक भरें',
+    'Product name':'उत्पाद का नाम','Category':'कैटेगरी','Quantity':'मात्रा','Minimum stock':'न्यूनतम स्टॉक','Expiry date':'एक्सपायरी तारीख',
+    'Batch ID':'बैच ID','Save Product':'उत्पाद सेव करें','Cancel':'रद्द करें','Close':'बंद करें',
+    'Inventory Alerts':'इन्वेंटरी अलर्ट','Smart Suggestions':'स्मार्ट सुझाव','Expiry date':'एक्सपायरी तारीख',
+    'Change language':'भाषा बदलें','Light mode':'लाइट मोड'
+  };
+  let language='en';
+  try{language=localStorage.getItem('smartstock_language_v1')||'en'}catch(_){}
+  const originalText=new WeakMap();
+  function translateNode(node, toHindi){
+    if(node.nodeType===Node.TEXT_NODE){
+      const raw=node.nodeValue, trimmed=raw.trim();
+      if(!trimmed) return;
+      if(!originalText.has(node)) originalText.set(node,raw);
+      const base=originalText.get(node).trim();
+      if(toHindi && dictionary[base]) node.nodeValue=raw.replace(base,dictionary[base]);
+      else if(!toHindi) node.nodeValue=originalText.get(node);
+    } else if(node.nodeType===Node.ELEMENT_NODE && !['SCRIPT','STYLE','INPUT','TEXTAREA','OPTION'].includes(node.tagName)){
+      if(node.matches?.('.product-name,.product-id,[data-user-content]')) return;
+      [...node.childNodes].forEach(child=>translateNode(child,toHindi));
+      if(node.hasAttribute('placeholder')){
+        if(!node.dataset.originalPlaceholder) node.dataset.originalPlaceholder=node.getAttribute('placeholder');
+        const ph=node.dataset.originalPlaceholder;
+        node.setAttribute('placeholder',toHindi?(dictionary[ph]||ph):ph);
+      }
+      if(node.hasAttribute('aria-label')){
+        if(!node.dataset.originalAria) node.dataset.originalAria=node.getAttribute('aria-label');
+        const a=node.dataset.originalAria;node.setAttribute('aria-label',toHindi?(dictionary[a]||a):a);
+      }
+    }
+  }
+  function applyLanguage(lang){
+    language=lang;
+    document.documentElement.lang=lang==='hi'?'hi':'en';
+    translateNode(document.body,lang==='hi');
+    label.textContent=lang==='hi'?'English':'हिन्दी';
+    button.setAttribute('aria-label',lang==='hi'?'Switch to English':'हिंदी भाषा चुनें');
+    try{localStorage.setItem('smartstock_language_v1',lang)}catch(_){}
+  }
+  // Preserve original strings for every node before first translation.
+  translateNode(document.body,false);
+  applyLanguage(language==='hi'?'hi':'en');
+  button.addEventListener('click',()=>applyLanguage(language==='hi'?'en':'hi'));
+  // Re-translate newly rendered UI fragments, but leave product names and user-entered data untouched.
+  const observer=new MutationObserver(records=>{
+    if(language!=='hi') return;
+    observer.disconnect();
+    for(const record of records){
+      for(const node of record.addedNodes) translateNode(node,true);
+      if(record.type==='characterData') translateNode(record.target,true);
+    }
+    observer.observe(document.body,{subtree:true,childList:true,characterData:true});
+  });
+  observer.observe(document.body,{subtree:true,childList:true,characterData:true});
+})();
+
 </script>
+
+
+<script>
+// Small interaction polish: buttons get a short-lived click ripple; no data is collected.
+(function(){
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.addEventListener('click', function(event){
+    const button = event.target.closest('button');
+    if(!button || button.disabled) return;
+    button.classList.remove('smartstock-click-pop');
+    void button.offsetWidth;
+    button.classList.add('smartstock-click-pop');
+    window.setTimeout(function(){button.classList.remove('smartstock-click-pop');}, 360);
+  });
+})();
+</script>
+<style>
+button.smartstock-click-pop{animation:smartstockClickPop .34s ease-out}
+@keyframes smartstockClickPop{0%{filter:brightness(1)}45%{filter:brightness(1.12)}100%{filter:brightness(1)}}
+</style>
 
 </body>
 
